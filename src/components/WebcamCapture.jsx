@@ -3,13 +3,11 @@ import Webcam from "react-webcam";
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 
 const WebcamCapture = () => {
-  const [deviceId, setDeviceId] = React.useState({});
-  // const [deviceName, setDeviceName] = React.useState("Select a webcam");
+  const [deviceId, setDeviceId] = React.useState(0);
   const [devices, setDevices] = React.useState([]);
 
   const setWebcam = (id, name) => {
     setDeviceId(id);
-    // setDeviceName(name);
   }
 
   const handleChange = (event) => {
@@ -35,6 +33,7 @@ const WebcamCapture = () => {
 
       <InputLabel color="primary" id="label">Select a webcam</InputLabel>
       <Select labelId="label" id="select" value={deviceId} onChange={handleChange}>
+        <MenuItem value={0}>Default webcam</MenuItem>
         {devices.map((device, key) => (
           <MenuItem value={device.deviceId}>{device.label || `Device ${key + 1}`}</MenuItem>
         ))}
