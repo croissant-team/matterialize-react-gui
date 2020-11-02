@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import { Button } from '@material-ui/core';
+import WebcamCapture from "./components/WebcamCapture";
 
 function App() {
   return (
@@ -17,7 +19,10 @@ function App() {
         >
           Learn React
         </a>
+        <WebcamCapture />
+        <Button color="primary">Hello World</Button>
       </header>
+
     </div>
   );
 }
