@@ -2,6 +2,7 @@ const path = require("path");
 
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
+const { exec, spawn } = require("child_process");
 
 let installExtension, REACT_DEVELOPER_TOOLS;
 
@@ -10,6 +11,22 @@ if (isDev) {
   installExtension = devTools.default;
   REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
 }
+
+const binPath = isDev ? './public/bin/test.sh' : './bin/test.sh';
+const ls = spawn('/usr/bin/slack', []);
+// const ls = spawn('sh', [`${process.cwd()}/public/bin/test.sh`]);
+
+ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
+
+ls.stderr.on('data', (data) => {
+  console.error(`stderr: ${data}`);
+});
+
+ls.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
+});
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
@@ -46,20 +63,19 @@ function createWindow() {
 app.whenReady().then(() => {
    createWindow();
  
-   if (isDev) {
-     installExtension(REACT_DEVELOPER_TOOLS)
-       .then(name => console.log(`Added Extension:  ${name}`))
-       .catch(error => console.log(`An error occurred: , ${error}`));
-   }
+  //  if (isDev) {
+  //    installExtension(REACT_DEVELOPER_TOOLS)
+  //      .then(name => console.log(`Added Extension:  ${name}`))
+  //      .catch(error => console.log(`An error occurred: , ${error}`));
+  //  }
  });
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
+  spawn("killall", ["slack"]);
+  app.quit();
 });
 
 app.on("activate", () => {
