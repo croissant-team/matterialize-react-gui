@@ -1,5 +1,4 @@
 import React from "react";
-import Webcam from "react-webcam";
 import { InputLabel, Select, MenuItem } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -14,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const WebcamCapture = () => {
+const WebcamSelector = () => {
   const classes = useStyles();
   const [deviceId, setDeviceId] = React.useState(0);
   const [devices, setDevices] = React.useState([]);
@@ -42,11 +41,6 @@ const WebcamCapture = () => {
 
   return (
     <>
-      <Webcam width={640} height={480} mirrored audio={false} videoConstraints={{ deviceId: deviceId}} />
-      <br />
-      <br />
-
-
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel id="webcam-select-label">Webcam</InputLabel>
         <Select
@@ -69,4 +63,4 @@ const WebcamCapture = () => {
 };
 
 
-export default WebcamCapture;
+export default WebcamSelector;
