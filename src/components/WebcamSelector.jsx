@@ -23,21 +23,28 @@ const WebcamSelector = () => {
   }
 
   const handleChange = (event) => {
-    setWebcam(event.target.value);
-  };
+    console.log(event.target);
+    console.log(devices);
 
-  const handleDevices = React.useCallback(
-    mediaDevices =>
-      setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
-    [setDevices]
-  );
+    setWebcam(event.target.value);
+
+    const options = {
+      method: 'post'
+    }
+    fetch("http://localhost:9000/camera/set/" + event.target.value, options)
+      .then(resp =>  console.log(resp))
+  };
 
   React.useEffect(
     () => {
-      navigator.mediaDevices.enumerateDevices().then(handleDevices);
+      fetch("http://localhost:9000/camera/options")
+        .then(res => res.json())
+        .then(devs => {
+          console.log(devs);
+          setDevices(devs.devices)})
     },
-    [handleDevices]
-  );
+    []
+  )
 
   return (
     <>
@@ -54,7 +61,7 @@ const WebcamSelector = () => {
             <em>Default webcam</em>
           </MenuItem>
           {devices.map((device, key) => (
-            <MenuItem value={device.deviceId}>{device.label || `Device ${key + 1}`}</MenuItem>
+            <MenuItem value={device.dev_num}>{device.name + `Device ${device.dev_num}`}</MenuItem>
           ))}
         </Select>
       </FormControl>
