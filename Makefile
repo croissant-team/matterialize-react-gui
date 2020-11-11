@@ -6,8 +6,7 @@ BIN_DIR := out
 RM := rm -rf
 
 # The make rules
-all:
-	build
+all: build
 
 # Builds the project, along with all of the dependencies, into a single jar
 build:
