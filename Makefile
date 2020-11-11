@@ -16,10 +16,10 @@ build:
 install: build
 	sudo dpkg -i out/make/deb/x64/matterialize_0.1.0_amd64.deb
 
-uninstall:
-	sudo apt remove matterialize
-
 clean:
-	$(RM) $(BUILD_DIR) $(BIN_DIR)
+	sudo $(RM) $(BUILD_DIR) $(BIN_DIR)
 
-.PHONY: all clean install
+uninstall: clean
+	sudo apt remove matterialize -y
+
+.PHONY: all clean install uninstall
