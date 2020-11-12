@@ -16,22 +16,24 @@ const useStyles = makeStyles((theme) => ({
 
 const WebcamCapture = () => {
   const classes = useStyles();
-  const [deviceId, setDeviceId] = React.useState(0);
+  const [deviceId, setDeviceId] = React.useState(100);
   const [devices, setDevices] = React.useState([]);
 
   const setWebcam = (id, name) => {
-    setDeviceId(id);
+    // setDeviceId(id);
   }
 
   const handleChange = (event) => {
     setWebcam(event.target.value);
   };
 
-  const handleDevices = React.useCallback(
-    mediaDevices =>
-      setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
-    [setDevices]
-  );
+  const handleDevices = (deviceList) => {
+    deviceList.forEach(element => {
+      if (element.label === "Matterialize") {
+        setDeviceId(element.deviceId);
+      }
+    });
+  }
 
   React.useEffect(
     () => {
@@ -45,25 +47,6 @@ const WebcamCapture = () => {
       <Webcam width={640} height={480} mirrored audio={false} videoConstraints={{ deviceId: deviceId}} />
       <br />
       <br />
-
-
-      <FormControl variant="outlined" className={classes.formControl}>
-        <InputLabel id="webcam-select-label">Webcam</InputLabel>
-        <Select
-          labelId="webcam-select-label"
-          id="webcam-select"
-          value={deviceId}
-          onChange={handleChange}
-          label="Webcam"
-        >
-          <MenuItem value={0}>
-            <em>Default webcam</em>
-          </MenuItem>
-          {devices.map((device, key) => (
-            <MenuItem value={device.deviceId}>{device.label || `Device ${key + 1}`}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
     </>
   );
 };

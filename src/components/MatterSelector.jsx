@@ -21,6 +21,12 @@ const MatterSelector = () => {
 
   const handleChange = (event) => {
     setMatter(event.target.value);
+
+    const options = {
+      method: 'post'
+    }
+    fetch("http://localhost:9000/matter/set/" + event.target.value, options)
+      .then(resp =>  console.log(resp))
   };
 
   return (
