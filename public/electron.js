@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 const path = require("path");
 
 const { app, BrowserWindow } = require("electron");
@@ -13,7 +14,7 @@ if (isDev) {
 }
 
 const binPath = isDev ? './public/bin/test.sh' : './bin/test.sh';
-const ls = spawn('/usr/bin/slack', []);
+const ls = spawn('matterialize-server', []);
 // const ls = spawn('sh', [`${process.cwd()}/public/bin/test.sh`]);
 
 ls.stdout.on('data', (data) => {
@@ -74,7 +75,9 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
-  spawn("killall", ["slack"]);
+  fetch("http://localhost:9000/shutdown", {
+    method: 'POST'
+  });
   app.quit();
 });
 
