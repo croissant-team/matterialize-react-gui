@@ -1,8 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
-import { Button } from '@material-ui/core';
 import WebcamCapture from "./components/WebcamCapture";
 import FileSelector from './components/FileSelector';
+import ClearBackground from './components/ClearBackground';
+import CleanPlateCapture from './components/CleanPlateCapture';
 import MatterSelector from './components/MatterSelector';
 import WebcamSelector from './components/WebcamSelector';
 import { Container, Row, Col } from 'react-grid-system';
@@ -10,22 +10,6 @@ import { Container, Row, Col } from 'react-grid-system';
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        
-        <Button color="primary">Hello World</Button>
-      </header> */}
       <Container>
         <Row>
           <Col sm={12}>
@@ -33,9 +17,10 @@ function App() {
           </Col>
         </Row>
         <br />
+        <br />
         <Row>
           <Col>
-            <FileSelector />
+            <WebcamSelector />
           </Col>
         </Row>
         <br />
@@ -47,13 +32,22 @@ function App() {
         <br />
         <Row>
           <Col>
-            <WebcamSelector />
+            <FileSelector />
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <CleanPlateCapture />
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <ClearBackground />
           </Col>
         </Row>
       </Container>
-
-
-
     </div>
   );
 }

@@ -1,35 +1,31 @@
 import React from "react";
-import Webcam from "react-webcam";
-import { InputLabel, Select, MenuItem, Button } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 
 const FileSelector = () => {
-  const [deviceId, setDeviceId] = React.useState(0);
-  const [devices, setDevices] = React.useState([]);
 
-  const setWebcam = (id, name) => {
-    setDeviceId(id);
-  }
+  const imgInputRef = React.useRef(null);
 
-  const handleChange = (event) => {
-    setWebcam(event.target.value);
+  const handleChange = (path) => {
+    fetch("http://localhost:9000/background/set/", {
+      method: 'post',
+      body: JSON.stringify({ content: path }),
+      headers: { 'Content-Type': 'application/json' }
+    })
   };
 
-  const handleDevices = React.useCallback(
-    mediaDevices =>
-      setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
-    [setDevices]
-  );
-
-  React.useEffect(
-    () => {
-      navigator.mediaDevices.enumerateDevices().then(handleDevices);
-    },
-    [handleDevices]
-  );
 
   return (
     <>
-      <Button variant="contained" color="primary">Select a background</Button>
+      <Button onClick={() => imgInputRef.current.click()} variant="contained" color="primary"><PanoramaOutlinedIcon />&nbsp; Select a background</Button>
+
+      <input
+        ref={imgInputRef}
+        hidden
+        type="file"
+        accept="image/*"
+        onChange={e => handleChange(e.nativeEvent.target.files[0].path)}
+      />
     </>
   );
 };
