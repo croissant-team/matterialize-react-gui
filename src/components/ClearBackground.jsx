@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from '@material-ui/core';;
+import { Button } from '@material-ui/core';
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 
 const ClearBackground = () => {
