@@ -18,7 +18,9 @@ const CleanPlateCapture = () => {
   };
 
   const takeCleanPlate = () => {
-    fetch("http://localhost:9000/cleanplate/take")
+    fetch("http://localhost:9000/cleanplate/take", {
+      method : 'POST'
+    })
     .then(res => setOpen(false))
     .catch(res => setOpen(false))
   };

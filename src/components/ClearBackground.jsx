@@ -5,7 +5,9 @@ import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 const ClearBackground = () => {
 
   const handleChange = () => {
-    fetch("http://localhost:9000/background/clear/")
+    fetch("http://localhost:9000/background/clear/", {
+      method: 'POST'
+    })
   };
 
 

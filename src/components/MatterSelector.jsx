@@ -27,10 +27,9 @@ const MatterSelector = () => {
     setMatter(matterType);
     setloadingMatter(true);
 
-    fetch("http://localhost:9000/matter/set/",  {
-      method: 'post',
-      body: JSON.stringify({ matter: matterType }),
-      headers: { 'Content-Type': 'application/json' }
+    fetch("http://localhost:9000/matter/set",  {
+      method: 'POST',
+      body: JSON.stringify({ matter: matterType })
     })
       .then(resp =>  setloadingMatter(false))
       .catch(err => setloadingMatter(false))

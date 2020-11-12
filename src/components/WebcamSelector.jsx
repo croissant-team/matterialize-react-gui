@@ -21,10 +21,9 @@ const WebcamSelector = () => {
   const handleChange = (event) => {
     const devNum = event.target.value;
 
-    fetch("http://localhost:9000/camera/set/",  {
-      method: 'post',
-      body: JSON.stringify({ dev_num: devNum}),
-      headers: { 'Content-Type': 'application/json' }
+    fetch("http://localhost:9000/camera/set",  {
+      method: 'POST',
+      body: JSON.stringify({ dev_num: devNum})
     })
       .then(resp => setDeviceId(devNum))
       .catch(err => console.log(err))
