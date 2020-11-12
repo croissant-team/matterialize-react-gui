@@ -15,40 +15,37 @@ const useStyles = makeStyles((theme) => ({
 
 const WebcamSelector = () => {
   const classes = useStyles();
-  const [deviceId, setDeviceId] = React.useState(0);
+  const [deviceId, setDeviceId] = React.useState(-1);
   const [devices, setDevices] = React.useState([]);
 
-  const setWebcam = (id, name) => {
-    setDeviceId(id);
-  }
-
   const handleChange = (event) => {
-    console.log(event.target);
-    console.log(devices);
+    const devNum = event.target.value;
 
-    setWebcam(event.target.value);
-
-    const options = {
-      method: 'post'
-    }
-    fetch("http://localhost:9000/camera/set/" + event.target.value, options)
-      .then(resp =>  console.log(resp))
+    fetch("http://localhost:9000/camera/set",  {
+      method: 'POST',
+      body: JSON.stringify({ dev_num: devNum})
+    })
+      .then(resp => setDeviceId(devNum))
+      .catch(err => console.log(err))
   };
 
   React.useEffect(
     () => {
       fetch("http://localhost:9000/camera/options")
         .then(res => res.json())
-        .then(devs => {
-          console.log(devs);
-          setDevices(devs.devices)})
+        .then(data => {
+          if (data.devices.length > 0) {
+            setDeviceId(0);
+          }
+          setDevices(data.devices);
+        })
     },
     []
   )
 
   return (
     <>
-      <FormControl variant="outlined" className={classes.formControl}>
+      <FormControl variant="outlined" className={classes.formControl} disabled={devices.length === 0}>
         <InputLabel id="webcam-select-label">Webcam</InputLabel>
         <Select
           labelId="webcam-select-label"
@@ -57,6 +54,12 @@ const WebcamSelector = () => {
           onChange={handleChange}
           label="Webcam"
         >
+          {devices.length === 0 && 
+            <MenuItem value={-1}>
+              <em>No webcam available</em>
+            </MenuItem>
+          }
+
           {devices.map((device, key) => (
             <MenuItem key={key} value={device.dev_num}>{device.name || `Device ${device.dev_num}`}</MenuItem>
           ))}

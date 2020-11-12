@@ -7,10 +7,9 @@ const FileSelector = () => {
   const imgInputRef = React.useRef(null);
 
   const handleChange = (path) => {
-    fetch("http://localhost:9000/background/set/", {
-      method: 'post',
-      body: JSON.stringify({ content: path }),
-      headers: { 'Content-Type': 'application/json' }
+    fetch("http://localhost:9000/background/set", {
+      method: 'POST',
+      body: JSON.stringify({ file_path: path })
     })
   };
 

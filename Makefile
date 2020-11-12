@@ -23,7 +23,7 @@ install-linux-generic: build
 	sudo ln -s ~/.matterialize/frontend/Matterialize /usr/local/bin/matterialize
 
 clean:
-	sudo $(RM) $(BUILD_DIR) $(BIN_DIR)
+	$(RM) $(BUILD_DIR) $(BIN_DIR)
 
 uninstall-deb:
 	sudo apt remove matterialize -y
