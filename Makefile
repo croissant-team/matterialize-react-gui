@@ -8,18 +8,29 @@ RM := rm -rf
 # The make rules
 all: build
 
-# Builds the project, along with all of the dependencies, into a single jar
+# Builds the project, along with all of the dependencies
 build:
 	npm install
 	npm run make
 
-install: build
+install-deb: build
 	sudo dpkg -i out/make/deb/x64/matterialize_0.1.0_amd64.deb
+
+install-linux-generic: build
+	mkdir -p ~/.matterialize
+	unzip out/make/zip/linux/x64/Matterialize-linux-x64-0.1.0.zip -d ~/.matterialize
+	mv ~/.matterialize/Matterialize-linux-x64 ~/.matterialize/frontend
+	sudo ln -s ~/.matterialize/frontend/Matterialize /usr/local/bin/matterialize
 
 clean:
 	sudo $(RM) $(BUILD_DIR) $(BIN_DIR)
 
-uninstall: clean
+uninstall-deb:
 	sudo apt remove matterialize -y
+
+uninstall-linux-generic:
+	rm -rf ~/.matterialize/frontend
+	sudo rm -f /usr/local/bin/matterialize
+
 
 .PHONY: all clean install uninstall
