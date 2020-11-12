@@ -9,7 +9,7 @@ const FileSelector = () => {
   const handleChange = (path) => {
     fetch("http://localhost:9000/background/set", {
       method: 'POST',
-      body: JSON.stringify({ content: path })
+      body: JSON.stringify({ file_path: path })
     })
   };
 

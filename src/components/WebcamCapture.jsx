@@ -6,7 +6,7 @@ const WebcamCapture = () => {
 
   const handleDevices = (deviceList) => {
     deviceList.forEach(element => {
-      if (element.label === "Matterialize") {
+      if (element.label === "matterialize") {
         setDeviceId(element.deviceId);
       }
     });
