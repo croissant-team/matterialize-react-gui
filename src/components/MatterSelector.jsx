@@ -17,18 +17,30 @@ const useStyles = makeStyles((theme) => ({
 
 const MatterSelector = () => {
   const classes = useStyles();
-  const [matter, setMatter] = React.useState(0);
+  const [matter, setMatter] = React.useState("None");
+  const [matters, setMatters] = React.useState([]);
 
   const handleChange = (event) => {
-    setMatter(event.target.value);
+    const matterType = event.target.value;
+    setMatter(matterType);
 
-    const options = {
-      method: 'post'
-    }
-    fetch("http://localhost:9000/matter/set/" + event.target.value, options)
+    fetch("http://localhost:9000/matter/set/",  {
+      method: 'post',
+      body: JSON.stringify({ content: matterType }),
+      headers: { 'Content-Type': 'application/json' }
+    })
       .then(resp =>  console.log(resp))
   };
 
+  React.useEffect(
+    () => {
+      fetch("http://localhost:9000/matter/options")
+        .then(res => res.json())
+        .then(data => {
+          setMatters(data.matters)})
+    },
+    []
+  )
   return (
     <>
       <FormControl variant="outlined" className={classes.formControl}>
@@ -40,11 +52,12 @@ const MatterSelector = () => {
           onChange={handleChange}
           label="Matter"
         >
-          <MenuItem value={0}>
+          <MenuItem value="None">
             <em>None</em>
           </MenuItem>
-           <MenuItem value={1}>Background cut</MenuItem>
-           <MenuItem value={2}>Background subtract</MenuItem>
+          {matters.map((matter, key) => (
+            <MenuItem key={key} value={matter.name}>{matter.name}</MenuItem>
+          ))}
         </Select>
       </FormControl>
     </>

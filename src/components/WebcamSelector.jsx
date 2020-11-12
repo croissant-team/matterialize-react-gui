@@ -57,11 +57,8 @@ const WebcamSelector = () => {
           onChange={handleChange}
           label="Webcam"
         >
-          <MenuItem value={0}>
-            <em>Default webcam</em>
-          </MenuItem>
           {devices.map((device, key) => (
-            <MenuItem value={device.dev_num}>{device.name + `Device ${device.dev_num}`}</MenuItem>
+            <MenuItem key={key} value={device.dev_num}>{device.name || `Device ${device.dev_num}`}</MenuItem>
           ))}
         </Select>
       </FormControl>
