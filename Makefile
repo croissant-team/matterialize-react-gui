@@ -17,7 +17,7 @@ install: build
 	sudo dpkg -i out/make/deb/x64/matterialize_0.1.0_amd64.deb
 
 clean:
-	sudo $(RM) $(BUILD_DIR) $(BIN_DIR)
+	$(RM) $(BUILD_DIR) $(BIN_DIR)
 
 uninstall: clean
 	sudo apt remove matterialize -y
