@@ -59,9 +59,6 @@ const MatterSelector = () => {
           <MenuItem value="None">
             <em>None</em>
           </MenuItem>
-          <MenuItem value="Nofdfne">
-            <em>None</em>
-          </MenuItem>
           {matters.map((matter, key) => (
             <MenuItem key={key} value={matter.name}>{matter.name}</MenuItem>
           ))}

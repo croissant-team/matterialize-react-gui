@@ -44,7 +44,7 @@ const CleanPlateCapture = () => {
         <DialogTitle id="alert-dialog-title">{"Retaking matter clean plate"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Please step out of frame. You can enter the frame once this message dissapears.
+            Please step out of frame. You can enter the frame once this message disappears.
           </DialogContentText>
         </DialogContent>
       </Dialog>
