@@ -2,11 +2,12 @@ import React from "react";
 import Webcam from "react-webcam";
 
 const WebcamCapture = () => {
-  const [deviceId, setDeviceId] = React.useState(100);
+  const [deviceId, setDeviceId] = React.useState(98);
 
   const handleDevices = (deviceList) => {
     deviceList.forEach(element => {
-      if (element.label === "matterialize") {
+      console.log(element);
+      if (element.label === "preview_matterialize") {
         setDeviceId(element.deviceId);
       }
     });
