@@ -19,7 +19,8 @@ install-deb: build
 install-linux-generic: build
 	mkdir -p ~/.matterialize
 	unzip out/make/zip/linux/x64/Matterialize-linux-x64-0.1.0.zip -d ~/.matterialize
-	mv ~/.matterialize/Matterialize-linux-x64 ~/.matterialize/frontend
+	rm -rf ~/.matterialize/frontend
+	mv -f ~/.matterialize/Matterialize-linux-x64 ~/.matterialize/frontend
 	sudo ln -sf ~/.matterialize/frontend/Matterialize /usr/local/bin/matterialize
 
 clean:
@@ -33,4 +34,4 @@ uninstall-linux-generic:
 	sudo rm -f /usr/local/bin/matterialize
 
 
-.PHONY: all clean install uninstall
+.PHONY: all clean build install-deb install-linux-generic uninstall-deb uninstall-linux-generic
