@@ -1,21 +1,17 @@
-import React from "react";
-import { Button } from '@material-ui/core';
-import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import React from "react"
+import { Button } from '@material-ui/core'
+import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined'
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 const CleanPlateCapture = () => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  const [open, setOpen] = React.useState(false)
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const takeCleanPlate = () => {
     fetch("http://localhost:9000/cleanplate/take", {
@@ -23,12 +19,12 @@ const CleanPlateCapture = () => {
     })
     .then(res => setOpen(false))
     .catch(res => setOpen(false))
-  };
+  }
 
   const handleChange = () => {
-    setOpen(true);
-    setTimeout(takeCleanPlate, 5000);
-  };
+    setOpen(true)
+    setTimeout(takeCleanPlate, 5000)
+  }
 
 
   return (
@@ -49,8 +45,8 @@ const CleanPlateCapture = () => {
         </DialogContent>
       </Dialog>
     </>
-  );
-};
+  )
+}
 
 
-export default CleanPlateCapture;
+export default CleanPlateCapture
