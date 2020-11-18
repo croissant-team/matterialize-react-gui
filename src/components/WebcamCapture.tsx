@@ -2,13 +2,13 @@ import React from 'react'
 import Webcam from 'react-webcam'
 
 const WebcamCapture = () => {
-  const [deviceId, setDeviceId] = React.useState(98)
+  const [deviceId, setDeviceId] = React.useState<string>()
 
   const handleDevices = (deviceList: MediaDeviceInfo[]): void => {
     deviceList.forEach(element => {
       console.log(element)
       if (element.label === 'preview_matterialize') {
-        setDeviceId(parseInt(element.deviceId))
+        setDeviceId(element.deviceId)
       }
     })
   }
@@ -23,7 +23,7 @@ const WebcamCapture = () => {
   return (
     <>
       <Webcam width={640} height={480} mirrored audio={false}
-              videoConstraints={{ deviceId: deviceId.toString() }}/>
+              videoConstraints={{ deviceId: deviceId }}/>
     </>
   )
 }
