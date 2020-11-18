@@ -24,8 +24,7 @@ const FileSelector: React.FC = () => {
         type="file"
         accept="image/*"
         onChange={e => {
-          // @ts-ignore
-          handleChange(e.nativeEvent?.target?.files[0].path)
+          handleChange(((e.nativeEvent.target as HTMLInputElement).files![0] as any).path)
         }}
       />
     </>
