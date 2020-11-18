@@ -1,10 +1,11 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import { Matter } from '../types'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -14,18 +15,17 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-}));
+}))
 
 const MatterSelector = () => {
-  const classes = useStyles();
-  const [matter, setMatter] = React.useState("None");
-  const [matters, setMatters] = React.useState([]);
-  const [loadingMatter, setloadingMatter] = React.useState(false);
+  const classes = useStyles()
+  const [matter, setMatter] = React.useState("None")
+  const [matters, setMatters] = React.useState<Matter[]>([])
+  const [loadingMatter, setloadingMatter] = React.useState(false)
 
-  const handleChange = (event) => {
-    const matterType = event.target.value;
-    setMatter(matterType);
-    setloadingMatter(true);
+  const selectMatter = (matterType: string) => {
+    setMatter(matterType)
+    setloadingMatter(true)
 
     fetch("http://localhost:9000/matter/set",  {
       method: 'POST',
@@ -33,7 +33,7 @@ const MatterSelector = () => {
     })
       .then(resp =>  setloadingMatter(false))
       .catch(err => setloadingMatter(false))
-  };
+  }
 
   React.useEffect(
     () => {
@@ -53,7 +53,7 @@ const MatterSelector = () => {
           labelId="matter-select-label"
           id="matter-select"
           value={matter}
-          onChange={handleChange}
+          onChange={e => selectMatter(e.target.value as string)}
           label="Matter"
         >
           <MenuItem value="None">
@@ -69,7 +69,7 @@ const MatterSelector = () => {
       {loadingMatter && <CircularProgress />}
       
     </>
-  );
+  )
 }
 
-export default MatterSelector;
+export default MatterSelector

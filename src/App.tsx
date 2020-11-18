@@ -8,7 +8,7 @@ import MatterSelector from './components/MatterSelector'
 import WebcamSelector from './components/WebcamSelector'
 import WebcamCapture from './components/WebcamCapture'
 
-function App () {
+const App: React.FC = () => {
   return (
     <div className="App">
       <Container>

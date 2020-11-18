@@ -26,8 +26,8 @@
   ],
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:import/errors",
     "plugin:import/warnings",
@@ -35,6 +35,11 @@
   ],
   "parser": "@typescript-eslint/parser",
   "rules": {
-    "import/order": "error"
+    "import/order": "error",
+    "semi": ["error", "never"],
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": "off",
+    "no-unused-vars": "warn"
   }
 }
