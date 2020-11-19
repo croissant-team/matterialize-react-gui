@@ -23,6 +23,15 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type AppProps =  PropsFromRedux;
 
 const App: React.FC<AppProps> = (props) => {
+
+  const checkLoaded = () => {
+    fetch("http://localhost:9000/matter/options")
+    .then(res => props.serverLoaded())
+    .catch(data => checkLoaded())
+  }
+
+  React.useEffect( checkLoaded, [] )
+
   return (
     <div className="App">
       {props.serverLoading && 
@@ -36,7 +45,7 @@ const App: React.FC<AppProps> = (props) => {
       </div>
 
       }
-      {false && 
+      {!props.serverLoading && 
         <MatterializeApp />
       }
 
