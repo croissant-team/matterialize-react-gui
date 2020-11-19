@@ -1,56 +1,47 @@
 import './App.css'
-import { Col, Container, Row } from 'react-grid-system'
+import { connect, ConnectedProps } from 'react-redux'
 import React from 'react'
-import FileSelector from './components/FileSelector'
-import ClearBackground from './components/ClearBackground'
-import CleanPlateCapture from './components/CleanPlateCapture'
-import MatterSelector from './components/MatterSelector'
-import WebcamSelector from './components/WebcamSelector'
-import WebcamCapture from './components/WebcamCapture'
+import { CircularProgress } from '@material-ui/core'
+import MatterializeApp from './MatterializeApp'
+import { RootState } from './data/reducers'
+import { serverLoaded } from './data/actions/loading/loadingActions'
 
-const App: React.FC = () => {
+
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    serverLoading: state.loadingReducer.loading
+  }
+}
+
+const connector = connect(
+  mapStateToProps,
+  { serverLoaded }
+)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type AppProps =  PropsFromRedux;
+
+const App: React.FC<AppProps> = (props) => {
   return (
     <div className="App">
-      <Container>
-        <Row>
-          <Col sm={12}>
-            <WebcamCapture/>
-          </Col>
-        </Row>
-        <br/>
-        <br/>
-        <Row>
-          <Col>
-            <WebcamSelector/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <MatterSelector/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <FileSelector/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <CleanPlateCapture/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <ClearBackground/>
-          </Col>
-        </Row>
-      </Container>
+      {props.serverLoading && 
+        <div
+        style={{
+            position: 'absolute', left: '50%', top: '50%',
+            transform: 'translate(-50%, -50%)'
+        }}
+        >
+          <CircularProgress />
+      </div>
+
+      }
+      {false && 
+        <MatterializeApp />
+      }
+
     </div>
   )
 }
 
-export default App
+export default connector(App)
