@@ -57,6 +57,23 @@ export default function BackgroundSelector() {
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+    switch (newValue) {
+      case 0:
+        fetch('http://localhost:9000/background/clear/', {
+          method: 'POST',
+        })
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        fetch('http://localhost:9000/background/blur', {
+          method: 'POST',
+          body: JSON.stringify({ size: 127 }),
+        })
+        break;
+    }
     // call endpoint to change it
   };
 
@@ -64,9 +81,9 @@ export default function BackgroundSelector() {
     <Container fixed maxWidth="md">
         <Paper square>
             <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="None" {...a11yProps(0)} />
+            <Tab label="Green Screen" {...a11yProps(0)} />
             <Tab label="Image" {...a11yProps(1)} />
-            <Tab label="Screen capture" {...a11yProps(2)} />
+            <Tab label="Screen Capture" {...a11yProps(2)} />
             <Tab label="Blur" {...a11yProps(3)} />
             </Tabs>
         <TabPanel value={value} index={0}>
