@@ -41,6 +41,7 @@ const MatterializeApp: React.FC = () => {
             <CleanPlateCapture/>
           </Col>
         </Row>
+        <br />
       </Container>
     </div>
   )

@@ -5,12 +5,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Paper } from '@material-ui/core';
+import { Container, Paper } from '@material-ui/core';
 import ImageSelector from './ImageSelector';
 import ScreenSelector from './ScreenSelector';
 import ClearBackground from './ClearBackground';
 import BlurSlider from './BlurSlider';
-import { Col, Container, Row } from 'react-grid-system';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -62,35 +61,29 @@ export default function BackgroundSelector() {
   };
 
   return (
-    <Paper square>
-        <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="None" {...a11yProps(0)} />
-          <Tab label="Image" {...a11yProps(1)} />
-          <Tab label="Screen capture" {...a11yProps(2)} />
-          <Tab label="Blur" {...a11yProps(3)} />
-        </Tabs>
-      <TabPanel value={value} index={0}>
-        Select a tab from above to choose a background
-        {/* need to clear the background when this panel is shown */}
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ImageSelector /> <ClearBackground /> <br /> <br />
-        Selected image: no image selected
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <ScreenSelector />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <Container>
-            <Row>
-                <Col>
-                <BlurSlider />
-                </Col>
-            </Row>
-
-        </Container>
-
-      </TabPanel>
-    </Paper>
+    <Container fixed maxWidth="md">
+        <Paper square>
+            <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab label="None" {...a11yProps(0)} />
+            <Tab label="Image" {...a11yProps(1)} />
+            <Tab label="Screen capture" {...a11yProps(2)} />
+            <Tab label="Blur" {...a11yProps(3)} />
+            </Tabs>
+        <TabPanel value={value} index={0}>
+            Select a tab from above to choose a background
+            {/* need to clear the background when this panel is shown */}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+            <ImageSelector /> <ClearBackground /> <br /> <br />
+            Selected image: no image selected
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+            <ScreenSelector />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+            <BlurSlider />
+        </TabPanel>
+        </Paper>
+    </Container>
   );
 }

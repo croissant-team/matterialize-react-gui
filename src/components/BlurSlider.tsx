@@ -48,8 +48,12 @@ function valuetext(value: number) {
 export default function BlurSlider() {
   const classes = useStyles();
 
+  const handleChange = (event: any, newValue: any) => {
+    console.log(newValue) // call endpoint here
+  };
+
   return (
-    <div>
+    <>
       <Typography id="discrete-slider-custom" gutterBottom>
         Blur amount
       </Typography>
@@ -58,9 +62,10 @@ export default function BlurSlider() {
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-custom"
         step={10}
+        onChange={handleChange}
         valueLabelDisplay="auto"
         marks={marks}
       />
-    </div>
+    </>
   );
 }
