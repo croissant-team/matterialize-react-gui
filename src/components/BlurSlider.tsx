@@ -45,8 +45,8 @@ export default function BlurSlider() {
     }
 
     if (blurSize !== blur) {
-      console.log(blurSize)
       setBlur(blurSize)
+
       fetch('http://localhost:9000/background/blur', {
         method: 'POST',
         body: JSON.stringify({ size: blurSize }),
