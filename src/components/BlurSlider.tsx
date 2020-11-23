@@ -20,22 +20,6 @@ const marks = [
     label: '0',
   },
   {
-    value: 20,
-    label: '20',
-  },
-  {
-    value: 40,
-    label: '40',
-  },
-  {
-    value: 60,
-    label: '60',
-  },
-  {
-    value: 80,
-    label: '80',
-  },
-  {
     value: 100,
     label: '100',
   },
@@ -46,10 +30,28 @@ function valuetext(value: number) {
 }
 
 export default function BlurSlider() {
+  const [blur, setBlur] = React.useState(63)
   const classes = useStyles();
 
   const handleChange = (event: any, newValue: any) => {
-    console.log(newValue) // call endpoint here
+    var blurSize = Math.floor(((newValue as number) / 100) * 128)
+
+    if (blurSize % 2 == 0) {
+      blurSize++
+    }
+
+    if (blurSize > 127) {
+      blurSize = 127
+    }
+
+    if (blurSize !== blur) {
+      console.log(blurSize)
+      setBlur(blurSize)
+      fetch('http://localhost:9000/background/blur', {
+        method: 'POST',
+        body: JSON.stringify({ size: blurSize }),
+      })
+    }
   };
 
   return (
@@ -58,13 +60,15 @@ export default function BlurSlider() {
         Blur amount
       </Typography>
       <Slider
-        defaultValue={20}
+        defaultValue={50}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-custom"
-        step={10}
         onChange={handleChange}
         valueLabelDisplay="auto"
         marks={marks}
+        min={0}
+        step={1}
+        max={100}
       />
     </>
   );

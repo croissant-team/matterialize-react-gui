@@ -70,7 +70,7 @@ export default function BackgroundSelector() {
       case 3:
         fetch('http://localhost:9000/background/blur', {
           method: 'POST',
-          body: JSON.stringify({ size: 127 }),
+          body: JSON.stringify({ size: 63 }),
         })
         break;
     }
