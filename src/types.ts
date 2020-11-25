@@ -6,3 +6,11 @@ export type Device = {
 export type Matter = {
   name: string;
 }
+
+export type Desktop = {
+  name: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}

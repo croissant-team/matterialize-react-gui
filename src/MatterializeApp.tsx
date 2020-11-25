@@ -1,12 +1,11 @@
 import './App.css'
 import { Col, Container, Row } from 'react-grid-system'
 import React from 'react'
-import FileSelector from './components/FileSelector'
-import ClearBackground from './components/ClearBackground'
 import CleanPlateCapture from './components/CleanPlateCapture'
 import MatterSelector from './components/MatterSelector'
 import WebcamSelector from './components/WebcamSelector'
 import WebcamCapture from './components/WebcamCapture'
+import BackgroundSelector from './components/BackgroundSelector'
 
 const MatterializeApp: React.FC = () => {
   return (
@@ -33,7 +32,7 @@ const MatterializeApp: React.FC = () => {
         <br/>
         <Row>
           <Col>
-            <FileSelector/>
+            <BackgroundSelector />
           </Col>
         </Row>
         <br/>
@@ -42,12 +41,7 @@ const MatterializeApp: React.FC = () => {
             <CleanPlateCapture/>
           </Col>
         </Row>
-        <br/>
-        <Row>
-          <Col>
-            <ClearBackground/>
-          </Col>
-        </Row>
+        <br />
       </Container>
     </div>
   )

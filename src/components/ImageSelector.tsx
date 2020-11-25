@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '@material-ui/core'
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined'
 
-const FileSelector: React.FC = () => {
+const ImageSelector: React.FC = () => {
 
   const imgInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -31,4 +31,4 @@ const FileSelector: React.FC = () => {
   )
 }
 
-export default FileSelector
+export default ImageSelector
