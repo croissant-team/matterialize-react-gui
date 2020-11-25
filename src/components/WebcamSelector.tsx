@@ -4,9 +4,12 @@ import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
 import { Device } from '../types'
-import { cameraBeingUsed } from '../data/actions/toast/toastActions'
+import { showToast } from '../data/actions/toast/toastActions'
 
-const connector = connect(null, {cameraBeingUsed})
+const BAD_REQUEST = 400
+const CONFLICT = 409
+
+const connector = connect(null, { showToast })
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 type WebcamSelectorProps = PropsFromRedux
@@ -30,7 +33,16 @@ const WebcamSelector: React.FC<WebcamSelectorProps> = (props) => {
     fetch('http://localhost:9000/camera/set', {
       method: 'POST',
       body: JSON.stringify({ dev_num: devNum }),
-    }).then(() => setDeviceId(devNum)).catch(err => console.log(err))
+      })
+    .then((res) => {
+      if (res.ok) {
+        setDeviceId(devNum)
+      } else {
+        res.text()
+        .then(msg => props.showToast(msg, "error"))
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   React.useEffect(
@@ -45,7 +57,7 @@ const WebcamSelector: React.FC<WebcamSelectorProps> = (props) => {
               if (data.available) {
                 setDeviceId(data.dev_num)
               } else {
-                props.cameraBeingUsed("Current camera is being used by another application", "error")
+                props.showToast("Current camera is being used by another application", "error")
               }
             })
           }

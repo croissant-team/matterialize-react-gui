@@ -1,7 +1,7 @@
-import { CAMERA_IN_USE, CLEAR_TOAST } from "./toastTypes";
+import { SHOW_TOAST as SHOW_TOAST, CLEAR_TOAST } from "./toastTypes";
 
-export const cameraBeingUsed = (message: string, messageType: string) => ({
-  type: CAMERA_IN_USE,
+export const showToast = (message: string, messageType: string) => ({
+  type: SHOW_TOAST,
   message: message,
   messageType: messageType
 })

@@ -23,8 +23,8 @@ const ResponseToast: React.FC<ResponseToastProps> = (props) => {
 
   return (
     <>
-      <Snackbar open={props.active} autoHideDuration={3000} onClose={() => clearToast}>
-        <Alert variant="filled" severity={props.messageType as Color} elevation={6} onClose={() => clearToast}>{props.message}</Alert>
+      <Snackbar open={props.active} autoHideDuration={2000} onClose={() => props.clearToast()}>
+        <Alert variant="filled" severity={props.messageType as Color} elevation={6} onClose={() => props.clearToast()}>{props.message}</Alert>
       </Snackbar>
     </>
   )

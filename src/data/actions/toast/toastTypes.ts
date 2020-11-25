@@ -1,8 +1,8 @@
-export const CAMERA_IN_USE = "CAMERA_IN_USE"
+export const SHOW_TOAST = "SHOW_TOAST"
 export const CLEAR_TOAST = "CLEAR_TOAST"
 
 interface CameraInUseAction {
-  type: typeof CAMERA_IN_USE,
+  type: typeof SHOW_TOAST,
   message: string,
   messageType: string
 }
