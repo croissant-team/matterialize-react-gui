@@ -1,8 +1,18 @@
 import React from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 import { InputLabel, MenuItem, Select } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
 import { Device } from '../types'
+import { showToast } from '../data/actions/toast/toastActions'
+
+const BAD_REQUEST = 400
+const CONFLICT = 409
+
+const connector = connect(null, { showToast })
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type WebcamSelectorProps = PropsFromRedux
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -14,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const WebcamSelector = () => {
+const WebcamSelector: React.FC<WebcamSelectorProps> = (props) => {
   const classes = useStyles()
   const [deviceId, setDeviceId] = React.useState(-1)
   const [devices, setDevices] = React.useState<Device[]>([])
@@ -23,16 +33,33 @@ const WebcamSelector = () => {
     fetch('http://localhost:9000/camera/set', {
       method: 'POST',
       body: JSON.stringify({ dev_num: devNum }),
-    }).then(() => setDeviceId(devNum)).catch(err => console.log(err))
+      })
+    .then((res) => {
+      if (res.ok) {
+        setDeviceId(devNum)
+      } else {
+        res.text()
+        .then(msg => props.showToast(msg, "error"))
+      }
+    })
+    .catch(err => console.log(err))
   }
 
   React.useEffect(
     () => {
-      fetch('http://localhost:9000/camera/options').
-        then(res => res.json()).
-        then(data => {
+      fetch('http://localhost:9000/camera/options')
+        .then(res => res.json())
+        .then(data => {
           if (data.devices.length > 0) {
-            setDeviceId(0)
+            fetch('http://localhost:9000/camera/current')
+            .then(res => res.json())
+            .then(data => {
+              if (data.available) {
+                setDeviceId(data.dev_num)
+              } else {
+                props.showToast("Current camera is being used by another application", "error")
+              }
+            })
           }
           setDevices(data.devices)
         })
@@ -69,4 +96,4 @@ const WebcamSelector = () => {
   )
 }
 
-export default WebcamSelector
+export default connector(WebcamSelector)

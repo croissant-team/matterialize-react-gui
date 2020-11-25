@@ -8,6 +8,7 @@ import WebcamCapture from './components/WebcamCapture'
 import BackgroundSelector from './components/BackgroundSelector'
 import RecordingIndicator from './components/RecordingIndicator'
 import RecordingButton from './components/RecordingButton'
+import ResponseToast from './components/ResponseToast'
 
 const MatterializeApp: React.FC = () => {
   return (
@@ -50,6 +51,7 @@ const MatterializeApp: React.FC = () => {
           </Col>
         </Row>
         <br />
+        <ResponseToast />
       </Container>
     </div>
   )

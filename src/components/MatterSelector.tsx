@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect, ConnectedProps } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -6,6 +7,14 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Matter } from '../types'
+import { showToast } from '../data/actions/toast/toastActions'
+
+const PRECONDITION_FAILED = 412
+
+const connector = connect(null, { showToast })
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type MatterSelectorProps = PropsFromRedux
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -17,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const MatterSelector = () => {
+const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
   const classes = useStyles()
   const [matter, setMatter] = React.useState("None")
   const [matters, setMatters] = React.useState<Matter[]>([])
@@ -25,13 +34,21 @@ const MatterSelector = () => {
 
   const selectMatter = (matterType: string) => {
     setMatter(matterType)
+    const prevMatter = matter
     setloadingMatter(true)
 
     fetch("http://localhost:9000/matter/set",  {
       method: 'POST',
       body: JSON.stringify({ matter: matterType })
     })
-      .then(resp =>  setloadingMatter(false))
+      .then(res =>  {
+        if (res.ok) {
+        } else if (res.status === PRECONDITION_FAILED) {
+          setMatter(prevMatter)
+          props.showToast("Please take a clean plate before using this matter", "warning")
+        }
+        setloadingMatter(false)
+      })
       .catch(err => setloadingMatter(false))
   }
 
@@ -42,6 +59,15 @@ const MatterSelector = () => {
         .then(data => {
           setMatters(data.matters)
         })
+      fetch("http://localhost:9000/matter/current")
+      .then(res => {
+        if (res.ok) {
+          res.json()
+          .then(data => setMatter(data.matter))
+        } else if (res.status === PRECONDITION_FAILED) {
+          props.showToast("Please take a clean plate before using this matter", "warning")
+        }
+      })
     },
     []
   )
@@ -72,4 +98,4 @@ const MatterSelector = () => {
   )
 }
 
-export default MatterSelector
+export default connector(MatterSelector)
