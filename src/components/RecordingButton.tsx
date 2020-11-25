@@ -1,7 +1,7 @@
 import React from 'react'
 import { RootState } from '../data/reducers'
 import { connect, ConnectedProps } from 'react-redux'
-import { Button } from '@material-ui/core'
+import { Button, Snackbar } from '@material-ui/core'
 import VideocamIcon from '@material-ui/icons/Videocam';
 import StopIcon from '@material-ui/icons/Stop';
 import { recordingStarted, recordingStopped } from '../data/actions/recording/recordingActions'
@@ -22,11 +22,29 @@ type RecordingButtonProps =  PropsFromRedux;
 
 const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
 
+  const [showToast, setShowToast] = React.useState<boolean>(false);
+  const [filePath, setFilePath] = React.useState<string>("");
+
   const toggleRecord = () => {
     if(props.recording) {
-      props.recordingStopped()
+      
+      fetch('http://localhost:9000/recording/stop', {
+        method: 'POST'
+      })
+      .then(data => data.json())
+      .then(resp => {
+        setFilePath(resp.path)
+        setShowToast(true)
+      
+        props.recordingStopped()
+      })
+      
     } else {
-      props.recordingStarted()
+      fetch('http://localhost:9000/recording/start', {
+        method: 'POST'
+      })
+      .then(() => props.recordingStarted())
+      
     }
   }
 
@@ -36,6 +54,13 @@ const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
         {props.recording ? <StopIcon /> : <VideocamIcon />} &nbsp;
         {props.recording ? "Stop recording" : "record"}
       </Button>
+
+      <Snackbar 
+        open={showToast} 
+        autoHideDuration={6000} 
+        onClose={() => setShowToast(false)} 
+        message={"File saved to " + {filePath}} 
+      />
     </>
   )
 }
