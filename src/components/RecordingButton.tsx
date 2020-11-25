@@ -3,6 +3,7 @@ import { RootState } from '../data/reducers'
 import { connect, ConnectedProps } from 'react-redux'
 import { Button } from '@material-ui/core'
 import VideocamIcon from '@material-ui/icons/Videocam';
+import StopIcon from '@material-ui/icons/Stop';
 import { recordingStarted, recordingStopped } from '../data/actions/recording/recordingActions'
 
 const mapStateToProps = (state: RootState) => {
@@ -32,7 +33,7 @@ const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
   return (
     <>
       <Button variant="contained" color={props.recording ? "secondary" : "primary"} onClick={toggleRecord}>
-        <VideocamIcon /> &nbsp;
+        {props.recording ? <StopIcon /> : <VideocamIcon />} &nbsp;
         {props.recording ? "Stop recording" : "record"}
       </Button>
     </>
