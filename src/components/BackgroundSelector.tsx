@@ -1,14 +1,12 @@
 import React from 'react';
 import { makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { Container, Paper } from '@material-ui/core';
-import ImageSelector from './ImageSelector';
+import FileSelector from './FileSelector';
 import ScreenSelector from './ScreenSelector';
-import ClearBackground from './ClearBackground';
 import BlurSlider from './BlurSlider';
 
 interface TabPanelProps {
@@ -82,17 +80,17 @@ export default function BackgroundSelector() {
         <Paper square>
             <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Green Screen" {...a11yProps(0)} />
-            <Tab label="Image" {...a11yProps(1)} />
+            <Tab label="File" {...a11yProps(1)} />
             <Tab label="Screen Capture" {...a11yProps(2)} />
             <Tab label="Blur" {...a11yProps(3)} />
             </Tabs>
         <TabPanel value={value} index={0}>
-            Select a tab from above to choose a background
+            Green Screen effect applied
             {/* need to clear the background when this panel is shown */}
         </TabPanel>
         <TabPanel value={value} index={1}>
-            <ImageSelector /> <ClearBackground /> <br /> <br />
-            Selected image: no image selected
+            <FileSelector /> <br /> <br />
+            Selected file: no image selected
         </TabPanel>
         <TabPanel value={value} index={2}>
             <ScreenSelector />
