@@ -6,6 +6,8 @@ import MatterSelector from './components/MatterSelector'
 import WebcamSelector from './components/WebcamSelector'
 import WebcamCapture from './components/WebcamCapture'
 import BackgroundSelector from './components/BackgroundSelector'
+import RecordingIndicator from './components/RecordingIndicator'
+import RecordingButton from './components/RecordingButton'
 
 const MatterializeApp: React.FC = () => {
   return (
@@ -14,9 +16,15 @@ const MatterializeApp: React.FC = () => {
         <Row>
           <Col sm={12}>
             <WebcamCapture/>
+            <RecordingIndicator />
           </Col>
         </Row>
         <br/>
+        <Row>
+          <Col>
+            <RecordingButton/>
+          </Col>
+        </Row>
         <br/>
         <Row>
           <Col>
