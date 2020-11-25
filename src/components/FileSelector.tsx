@@ -1,8 +1,24 @@
 import React from 'react'
 import { Button, Snackbar } from '@material-ui/core'
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined'
+import { RootState } from '../data/reducers'
+import { connect, ConnectedProps } from 'react-redux'
+import { fileLoaded } from '../data/actions/file/fileActions'
 
-const FileSelector: React.FC = () => {
+const mapStateToProps = (state: RootState) => {
+  return {
+  }
+}
+
+const connector = connect(
+  mapStateToProps,
+  { fileLoaded }
+)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type FileSelectorProps =  PropsFromRedux;
+
+const FileSelector: React.FC<FileSelectorProps> = (props) => {
 
   const imgInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -12,12 +28,17 @@ const FileSelector: React.FC = () => {
     const path = (file as any).path
 
     if (file.type.includes("video")) {
-      console.log(file.type)
+      fetch('http://localhost:9000/background/video', {
+        method: 'POST',
+        body: JSON.stringify({ file_path: path }),
+      })
+      .then(res => props.fileLoaded(file))
     } else if (file.type.includes("image")) {  
       fetch('http://localhost:9000/background/set', {
         method: 'POST',
         body: JSON.stringify({ file_path: path }),
       })
+      .then(res => props.fileLoaded(file))
     } else {
       setShowErrorToast(true)
     }
@@ -52,4 +73,4 @@ const FileSelector: React.FC = () => {
   )
 }
 
-export default FileSelector
+export default connector(FileSelector)

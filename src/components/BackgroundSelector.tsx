@@ -8,6 +8,13 @@ import { Container, Paper } from '@material-ui/core';
 import FileSelector from './FileSelector';
 import ScreenSelector from './ScreenSelector';
 import BlurSlider from './BlurSlider';
+import { RootState } from '../data/reducers';
+import { connect, ConnectedProps } from 'react-redux';
+
+const GREEN_SCREEN = 0
+const FILE = 1
+const DESKTOP = 2
+const BLUR = 3
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,23 +56,63 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-export default function BackgroundSelector() {
-//   const classes = useStyles();
+const mapStateToProps = (state: RootState) => {
+  return {
+    selectedFile: state.fileReducer.file
+  }
+}
+
+const connector = connect(
+  mapStateToProps,
+  {}
+)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type BackgroundSelectorProps =  PropsFromRedux;
+
+const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
   const [value, setValue] = React.useState(0);
+
+  const getFilePath = (file: File | undefined) => {
+    if (file === undefined) {
+      return "No file selected"
+    } else {
+      return (file as any).path
+    }
+  }
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
     switch (newValue) {
-      case 0:
+      case GREEN_SCREEN:
         fetch('http://localhost:9000/background/clear/', {
           method: 'POST',
         })
         break;
-      case 1:
+      case FILE:
+
+        if (props.selectedFile !== undefined) {
+          const file = props.selectedFile as File
+          const path = getFilePath(file)
+  
+          
+          if (file.type.includes("video")) {
+            fetch('http://localhost:9000/background/video', {
+              method: 'POST',
+              body: JSON.stringify({ file_path: path }),
+            })
+          } else if (file.type.includes("image")) {  
+            fetch('http://localhost:9000/background/set', {
+              method: 'POST',
+              body: JSON.stringify({ file_path: path }),
+            })
+          }
+        } 
+
         break;
-      case 2:
+      case DESKTOP:
         break;
-      case 3:
+      case BLUR:
         fetch('http://localhost:9000/background/blur', {
           method: 'POST',
           body: JSON.stringify({ size: 63 }),
@@ -79,26 +126,27 @@ export default function BackgroundSelector() {
     <Container fixed maxWidth="md">
         <Paper square>
             <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Green Screen" {...a11yProps(0)} />
-            <Tab label="File" {...a11yProps(1)} />
-            <Tab label="Screen Capture" {...a11yProps(2)} />
-            <Tab label="Blur" {...a11yProps(3)} />
+            <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
+            <Tab label="File" {...a11yProps(FILE)} />
+            <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
+            <Tab label="Blur" {...a11yProps(BLUR)} />
             </Tabs>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={GREEN_SCREEN}>
             Green Screen effect applied
-            {/* need to clear the background when this panel is shown */}
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={FILE}>
             <FileSelector /> <br /> <br />
-            Selected file: no image selected
+            Selected file: {getFilePath(props.selectedFile)}
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={DESKTOP}>
             <ScreenSelector />
         </TabPanel>
-        <TabPanel value={value} index={3}>
+        <TabPanel value={value} index={BLUR}>
             <BlurSlider />
         </TabPanel>
         </Paper>
     </Container>
   );
 }
+
+export default connector(BackgroundSelector)

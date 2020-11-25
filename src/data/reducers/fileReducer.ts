@@ -5,11 +5,11 @@ import { FileType, FILE_LOADED } from "../actions/file/fileTypes"
 export const noFile: string = "No file selected"
 
 type FileState = {
-    path: string
+    file: File | undefined
 }
 
 const initialState: FileState = {
-   path: noFile
+   file: undefined
 }
 
 
@@ -18,7 +18,7 @@ export function fileReducer(state = initialState, action: FileType): FileState {
       case FILE_LOADED:
          return {
             ...state,
-            path: action.payload.path
+            file: action.payload.file
          }
 
       default:
