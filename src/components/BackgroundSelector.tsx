@@ -58,7 +58,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const mapStateToProps = (state: RootState) => {
   return {
-    selectedFile: state.fileReducer.file
+    selectedFile: state.fileReducer.file,
+    selectedDesktop: state.desktopReducer.desktop
   }
 }
 
@@ -111,6 +112,12 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
 
         break;
       case DESKTOP:
+        if (props.selectedDesktop !== "") {
+          fetch("http://localhost:9000/background/desktop",  {
+            method: 'POST',
+            body: JSON.stringify({ desktop: props.selectedDesktop })
+          })
+        }
         break;
       case BLUR:
         fetch('http://localhost:9000/background/blur', {

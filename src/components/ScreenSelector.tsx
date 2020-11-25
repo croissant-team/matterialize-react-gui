@@ -6,6 +6,9 @@ import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Desktop } from '../types'
+import { RootState } from '../data/reducers'
+import { connect, ConnectedProps } from 'react-redux'
+import { desktopLoaded } from '../data/actions/desktop/desktopActions'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -17,18 +20,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ScreenSelector = () => {
+
+const mapStateToProps = (state: RootState) => {
+  return {
+    desktop: state.desktopReducer.desktop
+  }
+}
+
+const connector = connect(
+  mapStateToProps,
+  { desktopLoaded }
+)
+
+type PropsFromRedux = ConnectedProps<typeof connector>
+type ScreenSelectorProps =  PropsFromRedux;
+
+const ScreenSelector: React.FC<ScreenSelectorProps> = (props) => {
   const classes = useStyles()
-  const [desktop, setDesktop] = React.useState("None")
   const [desktops, setDesktops] = React.useState<Desktop[]>([])
 
   const selectDesktop = (desktopName: string) => {
-    setDesktop(desktopName)
-
     fetch("http://localhost:9000/background/desktop",  {
       method: 'POST',
       body: JSON.stringify({ desktop: desktopName })
     })
+    .then(res => props.desktopLoaded(desktopName))
   }
 
   React.useEffect(
@@ -48,7 +64,7 @@ const ScreenSelector = () => {
         <Select
           labelId="screen-select-label"
           id="screen-select"
-          value={desktop}
+          value={props.desktop}
           onChange={e => selectDesktop(e.target.value as string)}
           label="Screen"
         >
@@ -63,4 +79,4 @@ const ScreenSelector = () => {
   )
 }
 
-export default ScreenSelector
+export default connector(ScreenSelector)
