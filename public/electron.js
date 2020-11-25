@@ -14,7 +14,7 @@ if (isDev) {
 }
 
 const binPath = isDev ? './public/bin/test.sh' : './bin/test.sh';
-const ls = spawn('matterialize-server', []);
+const ls = spawn('ls', []);
 // const ls = spawn('sh', [`${process.cwd()}/public/bin/test.sh`]);
 
 ls.stdout.on('data', (data) => {
