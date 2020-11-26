@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Checkbox, Collapse, Container, FormControlLabel, Paper } from '@material-ui/core';
+import { Checkbox, Container, FormControlLabel, Paper, Collapse } from '@material-ui/core';
 import FileSelector from './FileSelector';
 import ScreenSelector from './ScreenSelector';
 import BlurSlider from './BlurSlider';
@@ -69,11 +69,12 @@ const connector = connect(
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
-type BackgroundSelectorProps =  PropsFromRedux;
+type ConfigEditorProps =  PropsFromRedux;
 
-const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
+const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
   const [value, setValue] = React.useState(0);
-  const [showBackgrounds, setShowBackgrounds] = React.useState(true);
+  const [showConfig, setShowConfig] = React.useState(false);
+
 
   const getFilePath = (file: File | undefined) => {
     if (file === undefined) {
@@ -130,9 +131,8 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
     // call endpoint to change it
   };
 
-
-  const toggleBackgrounds = () => {
-    setShowBackgrounds(!showBackgrounds)
+  const toggleConfig = () => {
+    setShowConfig(!showConfig)
   }
 
   return (
@@ -140,39 +140,39 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
       <FormControlLabel
         control={
           <Checkbox
-            checked={showBackgrounds}
-            onChange={toggleBackgrounds}
-            name="backgroundsCheckbox"
+            checked={showConfig}
+            onChange={toggleConfig}
+            name="configCheckbox"
             color="primary"
           />
         }
-        label="Show background effects"
+        label="Show config"
       />
-      <Collapse in={showBackgrounds}>
-        <Paper square>
-            <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
-            <Tab label="File" {...a11yProps(FILE)} />
-            <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
-            <Tab label="Blur" {...a11yProps(BLUR)} />
-            </Tabs>
-        <TabPanel value={value} index={GREEN_SCREEN}>
-            Green Screen effect applied
-        </TabPanel>
-        <TabPanel value={value} index={FILE}>
-            <FileSelector /> <br /> <br />
-            Selected file: {getFilePath(props.selectedFile)}
-        </TabPanel>
-        <TabPanel value={value} index={DESKTOP}>
-            <ScreenSelector />
-        </TabPanel>
-        <TabPanel value={value} index={BLUR}>
-            <BlurSlider />
-        </TabPanel>
-        </Paper>
-      </Collapse>
+        <Collapse in={showConfig}>
+          <Paper square>
+              <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
+              <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
+              <Tab label="File" {...a11yProps(FILE)} />
+              <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
+              <Tab label="Blur" {...a11yProps(BLUR)} />
+              </Tabs>
+          <TabPanel value={value} index={GREEN_SCREEN}>
+              Green Screen effect applied
+          </TabPanel>
+          <TabPanel value={value} index={FILE}>
+              <FileSelector /> <br /> <br />
+              Selected file: {getFilePath(props.selectedFile)}
+          </TabPanel>
+          <TabPanel value={value} index={DESKTOP}>
+              <ScreenSelector />
+          </TabPanel>
+          <TabPanel value={value} index={BLUR}>
+              <BlurSlider />
+          </TabPanel>
+          </Paper>
+        </Collapse>
     </Container>
   );
 }
 
-export default connector(BackgroundSelector)
+export default connector(ConfigEditor)

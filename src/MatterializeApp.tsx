@@ -9,6 +9,7 @@ import BackgroundSelector from './components/BackgroundSelector'
 import RecordingIndicator from './components/RecordingIndicator'
 import RecordingButton from './components/RecordingButton'
 import ResponseToast from './components/ResponseToast'
+import ConfigEditor from './components/ConfigEditor'
 
 const MatterializeApp: React.FC = () => {
   return (
@@ -46,6 +47,12 @@ const MatterializeApp: React.FC = () => {
         <Row>
           <Col>
             <BackgroundSelector />
+          </Col>
+        </Row>
+        <br />
+        <Row>
+          <Col>
+            <ConfigEditor />
           </Col>
         </Row>
         <br/>
