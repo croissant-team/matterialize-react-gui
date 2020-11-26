@@ -1,8 +1,9 @@
 import React from 'react';
-import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography } from '@material-ui/core';
+import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography, Button } from '@material-ui/core';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 import { getConfig } from '../data/actions/config/configActions';
+import BackgroundCutConfig from './configs/BackgroundCutConfig';
 
 
 const mapStateToProps = (state: RootState) => {
@@ -55,11 +56,21 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
         <Collapse in={showConfig}>
           <Paper square>
             {props.matter === "Background Cut" &&
-              <div></div>
+            <>
+              <BackgroundCutConfig />
+              <Button variant="contained" color="primary"> Apply </Button>
+              &nbsp;
+              &nbsp;
+            </>
             }
 
             {props.matter === "Background Negation" &&
-              <div></div>
+            <>
+              <BackgroundCutConfig />
+              <Button variant="contained" color="primary"> Apply </Button>
+              &nbsp;
+              &nbsp;
+            </>
             }
 
             {(props.matter === "None" || props.matter === "OpenCV") &&
@@ -70,6 +81,12 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
               </div>
             }
 
+            <Button variant="contained" color="primary"> Import </Button>
+            &nbsp;
+            &nbsp;
+            <Button variant="contained" color="secondary"> Export </Button>
+            <br />
+            <br />
           </Paper>
         </Collapse>
     </Container>

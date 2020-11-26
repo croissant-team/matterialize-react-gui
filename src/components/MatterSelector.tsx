@@ -35,6 +35,7 @@ const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
 
   const selectMatter = (matterType: string) => {
     setMatter(matterType)
+    props.matterUpdated(matterType)
     const prevMatter = matter
     setloadingMatter(true)
 
@@ -47,6 +48,7 @@ const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
           props.matterUpdated(matterType)
         } else if (res.status === PRECONDITION_FAILED) {
           setMatter(prevMatter)
+          props.matterUpdated(prevMatter)
           props.showToast("Please take a clean plate before using this matter", "warning")
         }
         setloadingMatter(false)
