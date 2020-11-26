@@ -1,5 +1,6 @@
 import { AppThunk } from "../../thunk"
-import { GET_CONFIG, MATTER_UPDATED, POST_CONFIG } from "./configTypes"
+import { cameraLoaded } from "../loading/loadingActions"
+import { GET_CONFIG, MATTER_UPDATED } from "./configTypes"
 
 export const postConfig = (matter: string, config: any): AppThunk => async dispatch => {
    fetch("http://localhost:9000/matter/config/update",{
@@ -9,8 +10,8 @@ export const postConfig = (matter: string, config: any): AppThunk => async dispa
          config: config
       })
    })
-   .then(resp => resp.json())
    .then(() => dispatch(getConfig()))
+   .then(() => dispatch(cameraLoaded()))
 }
 
 export const getConfig = (): AppThunk => async dispatch => {

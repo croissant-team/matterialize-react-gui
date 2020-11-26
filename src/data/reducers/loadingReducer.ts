@@ -1,11 +1,13 @@
-import { LoadingType, SERVER_LOADED } from "../actions/loading/loadingTypes"
+import { CAMERA_LOADING, LoadingType, SERVER_LOADED, CAMERA_LOADED } from "../actions/loading/loadingTypes"
 
 type LoadingState = {
-    loading: boolean
+    loading: boolean,
+    cameraLoading: boolean
 }
 
 const initialState: LoadingState = {
-   loading: true
+   loading: true,
+   cameraLoading: false
 }
 
 export function loadingReducer(state = initialState, action: LoadingType): LoadingState {
@@ -14,6 +16,16 @@ export function loadingReducer(state = initialState, action: LoadingType): Loadi
          return {
             ...state,
             loading : false
+         }
+      case CAMERA_LOADING:
+         return {
+            ...state,
+            cameraLoading : true
+         }
+      case CAMERA_LOADED:
+         return {
+            ...state,
+            cameraLoading : false
          }
 
       default:

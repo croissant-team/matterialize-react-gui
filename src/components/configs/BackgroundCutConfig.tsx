@@ -5,7 +5,8 @@ import { Button, Container } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../data/reducers';
 import CheckIcon from '@material-ui/icons/Check';
-import { getConfig, postConfig } from '../../data/actions/config/configActions';
+import { postConfig } from '../../data/actions/config/configActions';
+import { cameraLoading } from '../../data/actions/loading/loadingActions';
 
 const modelMixFactorMarks = [
   {
@@ -84,7 +85,7 @@ const mapStateToProps = (state: RootState) => {
 
 const connector = connect(
   mapStateToProps,
-  { postConfig }
+  { postConfig, cameraLoading }
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -135,7 +136,7 @@ const BackgroundCutConfig: React.FC<BackgroundCutConfigProps> = (props) => {
     config["downscale_factor"] = `${downscaleFactor}`
     config["global_bg_model_num_components"] = `${numComponents}`
     config["median_blur_kernel_size"] = `${medianBlurKernelSize}`
-
+    props.cameraLoading()
     props.postConfig("Background Cut", config)
   }
 
