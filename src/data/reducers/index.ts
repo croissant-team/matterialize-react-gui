@@ -1,4 +1,5 @@
 import { combineReducers } from "redux"
+import { configReducer } from "./configReducer"
 import { desktopReducer } from "./desktopReducer"
 import { fileReducer } from "./fileReducer"
 import { loadingReducer } from "./loadingReducer"
@@ -10,7 +11,8 @@ export const rootReducer = combineReducers({
     fileReducer: fileReducer,
     desktopReducer: desktopReducer,
     recordingReducer: recordingReducer,
-    toastReducer: toastReducer
+    toastReducer: toastReducer,
+    configReducer: configReducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

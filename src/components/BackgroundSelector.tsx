@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Container, Paper } from '@material-ui/core';
+import { Checkbox, Collapse, Container, FormControlLabel, Paper } from '@material-ui/core';
 import FileSelector from './FileSelector';
 import ScreenSelector from './ScreenSelector';
 import BlurSlider from './BlurSlider';
@@ -73,6 +73,7 @@ type BackgroundSelectorProps =  PropsFromRedux;
 
 const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
   const [value, setValue] = React.useState(0);
+  const [showBackgrounds, setShowBackgrounds] = React.useState(true);
 
   const getFilePath = (file: File | undefined) => {
     if (file === undefined) {
@@ -129,29 +130,56 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
     // call endpoint to change it
   };
 
+
+  const toggleBackgrounds = () => {
+    setShowBackgrounds(!showBackgrounds)
+  }
+
   return (
     <Container fixed maxWidth="md">
+      <div style={{position: 'absolute'}}>
+        <FormControlLabel
+          style={{
+            position: 'relative', float:'left', marginLeft: '0px'
+          }}
+          control={
+            <Checkbox
+              checked={showBackgrounds}
+              onChange={toggleBackgrounds}
+              name="backgroundsCheckbox"
+              color="primary"
+            />
+          }
+          label="Show background effects"
+        />
+      </div>
+
+      <Collapse in={showBackgrounds}>
         <Paper square>
-            <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
-            <Tab label="File" {...a11yProps(FILE)} />
-            <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
-            <Tab label="Blur" {...a11yProps(BLUR)} />
-            </Tabs>
-        <TabPanel value={value} index={GREEN_SCREEN}>
-            Green Screen effect applied
-        </TabPanel>
-        <TabPanel value={value} index={FILE}>
-            <FileSelector /> <br /> <br />
-            Selected file: {getFilePath(props.selectedFile)}
-        </TabPanel>
-        <TabPanel value={value} index={DESKTOP}>
-            <ScreenSelector />
-        </TabPanel>
-        <TabPanel value={value} index={BLUR}>
-            <BlurSlider />
-        </TabPanel>
+          <br />
+          <br />
+          <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
+            <Tab wrapped label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
+            <Tab wrapped label="File" {...a11yProps(FILE)} />
+            <Tab wrapped label="Screen Capture" {...a11yProps(DESKTOP)} />
+            <Tab wrapped label="Blur" {...a11yProps(BLUR)} />
+          </Tabs>
+
+          <TabPanel value={value} index={GREEN_SCREEN}>
+              Green Screen effect applied
+          </TabPanel>
+          <TabPanel value={value} index={FILE}>
+              <FileSelector /> <br /> <br />
+              Selected file: {getFilePath(props.selectedFile)}
+          </TabPanel>
+          <TabPanel value={value} index={DESKTOP}>
+              <ScreenSelector />
+          </TabPanel>
+          <TabPanel value={value} index={BLUR}>
+              <BlurSlider />
+          </TabPanel>
         </Paper>
+      </Collapse>
     </Container>
   );
 }

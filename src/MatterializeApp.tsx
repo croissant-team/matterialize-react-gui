@@ -1,5 +1,5 @@
 import './App.css'
-import { Col, Container, Row } from 'react-grid-system'
+import { Col, Container, Hidden, Row, Visible } from 'react-grid-system'
 import React from 'react'
 import CleanPlateCapture from './components/CleanPlateCapture'
 import MatterSelector from './components/MatterSelector'
@@ -9,13 +9,14 @@ import BackgroundSelector from './components/BackgroundSelector'
 import RecordingIndicator from './components/RecordingIndicator'
 import RecordingButton from './components/RecordingButton'
 import ResponseToast from './components/ResponseToast'
+import ConfigEditor from './components/ConfigEditor'
 
 const MatterializeApp: React.FC = () => {
   return (
     <div className="App">
       <Container>
         <Row>
-          <Col sm={12}>
+          <Col>
             <WebcamCapture/>
             <RecordingIndicator />
           </Col>
@@ -23,18 +24,22 @@ const MatterializeApp: React.FC = () => {
         <br/>
         <Row>
           <Col>
-            <RecordingButton/>
+            <RecordingButton/> 
+            &nbsp;
+            <Visible sm xs>
+              <br />
+              <br />
+            </Visible>
+            &nbsp;
+            <CleanPlateCapture/>
           </Col>
         </Row>
         <br/>
         <Row>
           <Col>
             <WebcamSelector/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
+            &nbsp;
+            &nbsp;
             <MatterSelector/>
           </Col>
         </Row>
@@ -44,17 +49,25 @@ const MatterializeApp: React.FC = () => {
             <BackgroundSelector />
           </Col>
         </Row>
-        <br/>
+        <br />
+        <br />
         <Row>
           <Col>
-            <CleanPlateCapture/>
+            <ConfigEditor />
           </Col>
         </Row>
+        <br/>
+        <br />
+        <br/>
+        <br />
+        <br/>
         <br />
         <ResponseToast />
       </Container>
     </div>
   )
 }
+
+// matters/benchmark
 
 export default MatterializeApp
