@@ -4,6 +4,7 @@ import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined'
 import { RootState } from '../data/reducers'
 import { connect, ConnectedProps } from 'react-redux'
 import { fileLoaded } from '../data/actions/file/fileActions'
+import { showToast } from '../data/actions/toast/toastActions'
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -12,17 +13,14 @@ const mapStateToProps = (state: RootState) => {
 
 const connector = connect(
   mapStateToProps,
-  { fileLoaded }
+  { fileLoaded, showToast }
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 type FileSelectorProps =  PropsFromRedux;
 
 const FileSelector: React.FC<FileSelectorProps> = (props) => {
-
   const imgInputRef = React.useRef<HTMLInputElement>(null)
-
-  const [showErrorToast, setShowErrorToast] = React.useState<boolean>(false);
 
   const handleChange = (file: File): void => {
     const path = (file as any).path
@@ -40,7 +38,7 @@ const FileSelector: React.FC<FileSelectorProps> = (props) => {
       })
       .then(res => props.fileLoaded(file))
     } else {
-      setShowErrorToast(true)
+      props.showToast("The selected file is not an image or video.", "error")
     }
 
   }
@@ -59,16 +57,6 @@ const FileSelector: React.FC<FileSelectorProps> = (props) => {
           handleChange(((e.nativeEvent.target as HTMLInputElement).files![0] as File))
         }}
       />
-
-
-      <Snackbar 
-        open={showErrorToast} 
-        autoHideDuration={6000} 
-        onClose={() => setShowErrorToast(false)} 
-        message="The selected file is not an image or video." 
-      />
-
-
     </>
   )
 }
