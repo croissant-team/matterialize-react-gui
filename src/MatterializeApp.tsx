@@ -1,5 +1,5 @@
 import './App.css'
-import { Col, Container, Row } from 'react-grid-system'
+import { Col, Container, Hidden, Row, Visible } from 'react-grid-system'
 import React from 'react'
 import CleanPlateCapture from './components/CleanPlateCapture'
 import MatterSelector from './components/MatterSelector'
@@ -25,6 +25,10 @@ const MatterializeApp: React.FC = () => {
           <Col>
             <RecordingButton/> 
             &nbsp;
+            <Visible sm xs>
+              <br />
+              <br />
+            </Visible>
             &nbsp;
             <CleanPlateCapture/>
           </Col>
