@@ -14,7 +14,9 @@ export const getConfig = (): AppThunk => async dispatch => {
    .then(resp => resp.json())
    .then(config => dispatch({
       type: GET_CONFIG,
-      payload: config
+      payload: {
+         config: config
+      }
    }))
 }
 

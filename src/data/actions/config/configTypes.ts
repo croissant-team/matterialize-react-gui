@@ -13,7 +13,7 @@ interface GetConfigAction {
 }
 
 interface PostConfigAction {
-   type: typeof GET_CONFIG,
+   type: typeof POST_CONFIG,
    payload: {
       config: any
    }

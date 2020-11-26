@@ -1,18 +1,20 @@
 import React from 'react';
-import { Checkbox, Container, FormControlLabel, Paper, Collapse } from '@material-ui/core';
+import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography } from '@material-ui/core';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
+import { getConfig } from '../data/actions/config/configActions';
 
 
 const mapStateToProps = (state: RootState) => {
   return {
-    matter: state.configReducer.matter
+    matter: state.configReducer.matter,
+    config: state.configReducer.config
   }
 }
 
 const connector = connect(
   mapStateToProps,
-  {}
+  { getConfig }
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -25,7 +27,9 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
     setShowConfig(!showConfig)
   }
 
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {
+    props.getConfig()
+  }, [])
 //   "Background Cut": {
 //     "color_model_mix_factor": "0 - 1"",
 //     "downscale_factor": "1,2 3 4",
@@ -50,7 +54,22 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
       />
         <Collapse in={showConfig}>
           <Paper square>
-            {props.matter}
+            {props.matter === "Background Cut" &&
+              <div></div>
+            }
+
+            {props.matter === "Background Negation" &&
+              <div></div>
+            }
+
+            {(props.matter === "None" || props.matter === "OpenCV") &&
+              <div>
+                <Box p={3}>
+                  <Typography>{`No config available for matter '${props.matter}'`}</Typography>
+                </Box>
+              </div>
+            }
+
           </Paper>
         </Collapse>
     </Container>
