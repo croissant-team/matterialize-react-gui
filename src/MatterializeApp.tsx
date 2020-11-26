@@ -57,8 +57,6 @@ const MatterializeApp: React.FC = () => {
             <ConfigEditor />
           </Col>
         </Row>
-        <br />
-        <br />
         <Row>
           <Col>
             <BenchmarkViewer />

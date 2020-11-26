@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography, Button } from '@material-ui/core';
+import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Grid } from '@material-ui/core';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
@@ -8,6 +8,8 @@ import { cameraLoading } from '../data/actions/loading/loadingActions';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import BackgroundCutConfig from './configs/BackgroundCutConfig';
 import BackgroundNegationConfig from './configs/BackgroundNegationConfig';
+import { ExpandMore } from '@material-ui/icons';
+import { Col, Row } from 'react-grid-system';
 
 
 
@@ -44,57 +46,48 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
 
   return (
     <Container fixed maxWidth="md">
-      <div style={{position: 'absolute'}}>
-          <FormControlLabel
-            style={{
-              position: 'relative', float:'left', marginLeft: '0px'
-            }}
-            control={
-              <Checkbox
-                  checked={showConfig}
-                  onChange={toggleConfig}
-                  name="configCheckbox"
-                  color="primary"
-              />
-            }
-            label="Show config     "
-          />
-      </div>
-
-      <Collapse in={showConfig}>
-        <Paper square>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMore />}
+          aria-controls="config"
+          id="config-header"
+        >
+          <Typography>
+            Matter Configuration
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails>
           <br />
+          <Grid container justify="center" alignItems="center" spacing={4}>
+            <Grid item xs={12}>
+              {props.matter === "Background Cut" &&
+                <BackgroundCutConfig />
+              }
 
-          {props.matter === "Background Cut" &&
-            <BackgroundCutConfig />
-          }
+              {props.matter === "Background Negation" &&
+                <BackgroundNegationConfig />
+              }
 
-          {props.matter === "Background Negation" &&
-            <BackgroundNegationConfig />
-          }
-
-          {(props.matter === "None" || props.matter === "OpenCV") &&
-            <div>
-              <Box p={3}>
-                <Typography>{`No config available for matter '${props.matter}'`}</Typography>
-              </Box>
-            </div>
-          }
-          <br />
-
-          <Button variant="contained" color="primary" onClick={importConfig}> 
-            <PublishIcon /> &nbsp; Import 
-          </Button>
-          &nbsp;
-          &nbsp;
-          <Button variant="contained" color="secondary" onClick={props.exportConfig}> 
-            <GetAppIcon /> &nbsp; Export 
-          </Button>
-          <br />
-          <br />
-          
-        </Paper>
-      </Collapse>
+              {(props.matter === "None" || props.matter === "OpenCV") &&
+                <div>
+                  <Box p={3}>
+                    <Typography>{`No config available for matter '${props.matter}'`}</Typography>
+                  </Box>
+                </div>
+              }
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary" onClick={importConfig}> 
+                <PublishIcon /> &nbsp; Import 
+              </Button>
+              &nbsp;&nbsp;
+              <Button variant="contained" color="secondary" onClick={props.exportConfig}> 
+                <GetAppIcon /> &nbsp; Export 
+              </Button>
+            </Grid>
+          </Grid>
+        </AccordionDetails>
+      </Accordion>
     </Container>
   );
 }
