@@ -3,7 +3,8 @@ import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
-import { getConfig } from '../data/actions/config/configActions';
+import { getConfig, importConfig, exportConfig } from '../data/actions/config/configActions';
+import { cameraLoading } from '../data/actions/loading/loadingActions';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import BackgroundCutConfig from './configs/BackgroundCutConfig';
 import BackgroundNegationConfig from './configs/BackgroundNegationConfig';
@@ -19,7 +20,7 @@ const mapStateToProps = (state: RootState) => {
 
 const connector = connect(
   mapStateToProps,
-  { getConfig }
+  { getConfig, importConfig, exportConfig, cameraLoading }
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -30,6 +31,11 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
 
   const toggleConfig = () => {
     setShowConfig(!showConfig)
+  }
+
+  const importConfig = () => {
+    props.cameraLoading();
+    props.importConfig();
   }
 
   React.useEffect(() => {
@@ -71,10 +77,14 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
               </div>
             }
             <br />
-            <Button variant="contained" color="primary"> <PublishIcon /> &nbsp; Import </Button>
+            <Button variant="contained" color="primary" onClick={importConfig}> 
+              <PublishIcon /> &nbsp; Import 
+            </Button>
             &nbsp;
             &nbsp;
-            <Button variant="contained" color="secondary"> <GetAppIcon /> &nbsp; Export </Button>
+            <Button variant="contained" color="secondary" onClick={props.exportConfig}> 
+              <GetAppIcon /> &nbsp; Export 
+            </Button>
             <br />
             <br />
           </Paper>

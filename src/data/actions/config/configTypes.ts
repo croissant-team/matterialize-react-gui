@@ -19,6 +19,14 @@ interface PostConfigAction {
    }
 }
 
+interface ExportConfigAction {
+   type: typeof EXPORT_CONFIG,
+   payload: {
+      config: any
+   }
+}
+
+
 interface MatterUpdatedAction {
    type: typeof MATTER_UPDATED,
    payload: {

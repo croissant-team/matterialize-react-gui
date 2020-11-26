@@ -25,6 +25,19 @@ export const getConfig = (): AppThunk => async dispatch => {
    }))
 }
 
+export const importConfig = (): AppThunk => async dispatch => {
+   fetch("http://localhost:9000/matters/config/import_file", {
+      method: "POST"
+   })
+   .then(() => dispatch(getConfig()))
+   .then(() => dispatch(cameraLoaded()))
+}
+
+export const exportConfig = (): AppThunk => async dispatch => {
+   fetch("http://localhost:9000/matters/config/export_file", {
+      method: "POST"
+   })
+}
 
 export const matterUpdated = (matter: string) => {
    return {
