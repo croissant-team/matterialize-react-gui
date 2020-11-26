@@ -137,17 +137,24 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
 
   return (
     <Container fixed maxWidth="md">
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={showBackgrounds}
-            onChange={toggleBackgrounds}
-            name="backgroundsCheckbox"
-            color="primary"
-          />
-        }
-        label="Show background effects"
-      />
+      <div
+        style={{
+            position: 'relative', left: '-35%'
+        }}
+      >
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={showBackgrounds}
+              onChange={toggleBackgrounds}
+              name="backgroundsCheckbox"
+              color="primary"
+            />
+          }
+          label="Show background effects"
+        />
+      </div>
+
       <Collapse in={showBackgrounds}>
         <Paper square>
             <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">

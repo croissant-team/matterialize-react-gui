@@ -44,51 +44,61 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
 
   return (
     <Container fixed maxWidth="md">
-      <FormControlLabel
-        control={
-          <Checkbox
-            checked={showConfig}
-            onChange={toggleConfig}
-            name="configCheckbox"
-            color="primary"
+      <div
+        style={{
+            position: 'absolute', paddingLeft: '0px'
+        }}
+      >
+          <FormControlLabel
+            style={{
+              position: 'relative', float:'left', marginLeft: '0px'
+            }}
+            control={
+              <Checkbox
+                  checked={showConfig}
+                  onChange={toggleConfig}
+                  name="configCheckbox"
+                  color="primary"
+              />
+            }
+            label="Show config     "
           />
-        }
-        label="Show config"
-      />
-        <Collapse in={showConfig}>
-          <Paper square>
-            {props.matter === "Background Cut" &&
-            <>
-              <BackgroundCutConfig />
-            </>
-            }
+      </div>
 
-            {props.matter === "Background Negation" &&
-            <>
-              <BackgroundNegationConfig />
-            </>
-            }
+      <Collapse in={showConfig}>
+        <Paper square>
+          {props.matter === "Background Cut" &&
+          <>
+            <BackgroundCutConfig />
+          </>
+          }
 
-            {(props.matter === "None" || props.matter === "OpenCV") &&
-              <div>
-                <Box p={3}>
-                  <Typography>{`No config available for matter '${props.matter}'`}</Typography>
-                </Box>
-              </div>
-            }
-            <br />
-            <Button variant="contained" color="primary" onClick={importConfig}> 
-              <PublishIcon /> &nbsp; Import 
-            </Button>
-            &nbsp;
-            &nbsp;
-            <Button variant="contained" color="secondary" onClick={props.exportConfig}> 
-              <GetAppIcon /> &nbsp; Export 
-            </Button>
-            <br />
-            <br />
-          </Paper>
-        </Collapse>
+          {props.matter === "Background Negation" &&
+          <>
+            <BackgroundNegationConfig />
+          </>
+          }
+
+          {(props.matter === "None" || props.matter === "OpenCV") &&
+            <div>
+              <Box p={3}>
+                <Typography>{`No config available for matter '${props.matter}'`}</Typography>
+              </Box>
+            </div>
+          }
+          <br />
+          <Button variant="contained" color="primary" onClick={importConfig}> 
+            <PublishIcon /> &nbsp; Import 
+          </Button>
+          &nbsp;
+          &nbsp;
+          <Button variant="contained" color="secondary" onClick={props.exportConfig}> 
+            <GetAppIcon /> &nbsp; Export 
+          </Button>
+          <br />
+          <br />
+        </Paper>
+      </Collapse>
     </Container>
   );
 }
