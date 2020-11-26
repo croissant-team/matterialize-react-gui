@@ -67,16 +67,14 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
 
       <Collapse in={showConfig}>
         <Paper square>
+          <br />
+
           {props.matter === "Background Cut" &&
-          <>
             <BackgroundCutConfig />
-          </>
           }
 
           {props.matter === "Background Negation" &&
-          <>
             <BackgroundNegationConfig />
-          </>
           }
 
           {(props.matter === "None" || props.matter === "OpenCV") &&
@@ -87,6 +85,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
             </div>
           }
           <br />
+
           <Button variant="contained" color="primary" onClick={importConfig}> 
             <PublishIcon /> &nbsp; Import 
           </Button>
@@ -97,6 +96,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
           </Button>
           <br />
           <br />
+          
         </Paper>
       </Collapse>
     </Container>
