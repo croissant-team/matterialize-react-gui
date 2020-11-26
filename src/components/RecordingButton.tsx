@@ -62,7 +62,7 @@ const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
         open={showToast} 
         autoHideDuration={6000} 
         onClose={() => setShowToast(false)} 
-        message={"File saved to " + {filePath}} 
+        message={"File saved to " + filePath} 
       />
     </>
   )
