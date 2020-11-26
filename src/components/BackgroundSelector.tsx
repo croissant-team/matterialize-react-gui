@@ -159,10 +159,10 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
           <br />
           <br />
           <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-            <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
-            <Tab label="File" {...a11yProps(FILE)} />
-            <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
-            <Tab label="Blur" {...a11yProps(BLUR)} />
+            <Tab wrapped label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
+            <Tab wrapped label="File" {...a11yProps(FILE)} />
+            <Tab wrapped label="Screen Capture" {...a11yProps(DESKTOP)} />
+            <Tab wrapped label="Blur" {...a11yProps(BLUR)} />
           </Tabs>
 
           <TabPanel value={value} index={GREEN_SCREEN}>
