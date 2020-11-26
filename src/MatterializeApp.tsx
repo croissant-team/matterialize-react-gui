@@ -10,6 +10,7 @@ import RecordingIndicator from './components/RecordingIndicator'
 import RecordingButton from './components/RecordingButton'
 import ResponseToast from './components/ResponseToast'
 import ConfigEditor from './components/ConfigEditor'
+import BenchmarkViewer from './components/BenchmarkViewer'
 
 const MatterializeApp: React.FC = () => {
   return (
@@ -56,11 +57,16 @@ const MatterializeApp: React.FC = () => {
             <ConfigEditor />
           </Col>
         </Row>
-        <br/>
         <br />
-        <br/>
         <br />
-        <br/>
+        <Row>
+          <Col>
+            <BenchmarkViewer />
+          </Col>
+        </Row>
+        <br />
+        <br />
+        <br />
         <br />
         <ResponseToast />
       </Container>
