@@ -64,14 +64,10 @@ const MatterializeApp: React.FC = () => {
         </Row>
         <br />
         <br />
-        <br />
-        <br />
         <ResponseToast />
       </Container>
     </div>
   )
 }
-
-// matters/benchmark
 
 export default MatterializeApp

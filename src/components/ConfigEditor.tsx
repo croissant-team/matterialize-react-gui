@@ -29,11 +29,6 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type ConfigEditorProps =  PropsFromRedux;
 
 const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
-  const [showConfig, setShowConfig] = React.useState(false);
-
-  const toggleConfig = () => {
-    setShowConfig(!showConfig)
-  }
 
   const importConfig = () => {
     props.cameraLoading();
@@ -45,7 +40,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
   }, [])
 
   return (
-    <Container fixed maxWidth="md">
+    <Container fixed maxWidth="sm">
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMore />}

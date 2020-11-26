@@ -55,7 +55,7 @@ const BenchmarkViewer = () => {
   }
 
   return(
-    <Container fixed maxWidth="md">
+    <Container fixed maxWidth="sm">
 
       <Accordion>
         <AccordionSummary
@@ -72,6 +72,7 @@ const BenchmarkViewer = () => {
                 <div className={classes.root}>
                   <LinearProgress  />
                 </div>
+                <br />
               </Grid>
             }
             <Grid item xs={12}>
