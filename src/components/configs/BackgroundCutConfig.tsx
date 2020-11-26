@@ -4,6 +4,8 @@ import Slider from '@material-ui/core/Slider';
 import { Button, Container } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../data/reducers';
+import CheckIcon from '@material-ui/icons/Check';
+import { getConfig, postConfig } from '../../data/actions/config/configActions';
 
 const modelMixFactorMarks = [
   {
@@ -82,7 +84,7 @@ const mapStateToProps = (state: RootState) => {
 
 const connector = connect(
   mapStateToProps,
-  {  }
+  { postConfig }
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
@@ -108,27 +110,36 @@ const BackgroundCutConfig: React.FC<BackgroundCutConfigProps> = (props) => {
 
   const changeMixFactor = (event: any, newValue: any) => {
     setMixFactor(newValue as number)
+    setChanged(true)
   };
 
   const changeDownscaleFactor = (event: any, newValue: any) => {
     setDownscaleFactor(newValue as number)
+    setChanged(true)
   };
 
   const changeNumComponents = (event: any, newValue: any) => {
     setNumComponents(newValue as number)
+    setChanged(true)
   };
 
   const changeMedianBlurKernelSize = (event: any, newValue: any) => {
     setMedianBlurKernelSize(newValue as number)
+    setChanged(true)
   };
 
-  //   "Background Cut": {
-//     "color_model_mix_factor": "0 - 1"",
-//     "downscale_factor": "1,2 3 4",
-//     "global_bg_model_num_components": "5 - 15",
-//     "median_blur_kernel_size": "odd number between 1 - 50"
-// },
 
+  const applyConfig = () => {
+    const config: any = {}
+    config["color_model_mix_factor"] = `${mixFactor}`
+    config["downscale_factor"] = `${downscaleFactor}`
+    config["global_bg_model_num_components"] = `${numComponents}`
+    config["median_blur_kernel_size"] = `${medianBlurKernelSize}`
+
+    props.postConfig("Background Cut", config)
+  }
+
+  
   return (
     <Container>
       <br />
@@ -199,7 +210,14 @@ const BackgroundCutConfig: React.FC<BackgroundCutConfigProps> = (props) => {
       max={49}
     />
 
-    <Button disabled={!changed} variant="contained" color="primary"> Apply </Button>
+    <Button 
+      disabled={!changed} 
+      variant="contained" 
+      color="primary"
+      onClick={applyConfig}
+    >
+       <CheckIcon /> &nbsp; Apply 
+    </Button>
     </Container>
   );
 }
