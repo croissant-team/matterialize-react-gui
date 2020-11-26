@@ -15,7 +15,7 @@ const MatterializeApp: React.FC = () => {
     <div className="App">
       <Container>
         <Row>
-          <Col sm={12}>
+          <Col>
             <WebcamCapture/>
             <RecordingIndicator />
           </Col>
@@ -23,18 +23,18 @@ const MatterializeApp: React.FC = () => {
         <br/>
         <Row>
           <Col>
-            <RecordingButton/>
+            <RecordingButton/> 
+            &nbsp;
+            &nbsp;
+            <CleanPlateCapture/>
           </Col>
         </Row>
         <br/>
         <Row>
           <Col>
             <WebcamSelector/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
+            &nbsp;
+            &nbsp;
             <MatterSelector/>
           </Col>
         </Row>
@@ -45,11 +45,6 @@ const MatterializeApp: React.FC = () => {
           </Col>
         </Row>
         <br/>
-        <Row>
-          <Col>
-            <CleanPlateCapture/>
-          </Col>
-        </Row>
         <br />
         <ResponseToast />
       </Container>

@@ -33,11 +33,14 @@ const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
       })
       .then(data => data.json())
       .then(resp => {
-        setFilePath(resp.path)
         setShowToast(true)
-      
         props.recordingStopped()
+
+        console.log(resp)
+
+        return resp.path
       })
+      .then(path => setFilePath(path))
       
     } else {
       fetch('http://localhost:9000/recording/start', {
