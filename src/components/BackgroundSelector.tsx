@@ -137,12 +137,11 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
 
   return (
     <Container fixed maxWidth="md">
-      <div
-        style={{
-            position: 'relative', left: '-35%'
-        }}
-      >
+      <div style={{position: 'absolute'}}>
         <FormControlLabel
+          style={{
+            position: 'relative', float:'left', marginLeft: '0px'
+          }}
           control={
             <Checkbox
               checked={showBackgrounds}
@@ -157,25 +156,28 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
 
       <Collapse in={showBackgrounds}>
         <Paper square>
-            <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
+          <br />
+          <br />
+          <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
             <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
             <Tab label="File" {...a11yProps(FILE)} />
             <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
             <Tab label="Blur" {...a11yProps(BLUR)} />
-            </Tabs>
-        <TabPanel value={value} index={GREEN_SCREEN}>
-            Green Screen effect applied
-        </TabPanel>
-        <TabPanel value={value} index={FILE}>
-            <FileSelector /> <br /> <br />
-            Selected file: {getFilePath(props.selectedFile)}
-        </TabPanel>
-        <TabPanel value={value} index={DESKTOP}>
-            <ScreenSelector />
-        </TabPanel>
-        <TabPanel value={value} index={BLUR}>
-            <BlurSlider />
-        </TabPanel>
+          </Tabs>
+
+          <TabPanel value={value} index={GREEN_SCREEN}>
+              Green Screen effect applied
+          </TabPanel>
+          <TabPanel value={value} index={FILE}>
+              <FileSelector /> <br /> <br />
+              Selected file: {getFilePath(props.selectedFile)}
+          </TabPanel>
+          <TabPanel value={value} index={DESKTOP}>
+              <ScreenSelector />
+          </TabPanel>
+          <TabPanel value={value} index={BLUR}>
+              <BlurSlider />
+          </TabPanel>
         </Paper>
       </Collapse>
     </Container>

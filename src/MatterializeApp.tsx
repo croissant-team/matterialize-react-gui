@@ -50,6 +50,7 @@ const MatterializeApp: React.FC = () => {
           </Col>
         </Row>
         <br />
+        <br />
         <Row>
           <Col>
             <ConfigEditor />

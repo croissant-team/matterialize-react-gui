@@ -44,11 +44,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
 
   return (
     <Container fixed maxWidth="md">
-      <div
-        style={{
-            position: 'absolute', paddingLeft: '0px'
-        }}
-      >
+      <div style={{position: 'absolute'}}>
           <FormControlLabel
             style={{
               position: 'relative', float:'left', marginLeft: '0px'
