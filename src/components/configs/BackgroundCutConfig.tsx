@@ -138,6 +138,7 @@ const BackgroundCutConfig: React.FC<BackgroundCutConfigProps> = (props) => {
     config["median_blur_kernel_size"] = `${medianBlurKernelSize}`
     props.cameraLoading()
     props.postConfig("Background Cut", config)
+    setChanged(false)
   }
 
   

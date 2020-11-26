@@ -6,6 +6,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import { getConfig } from '../data/actions/config/configActions';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import BackgroundCutConfig from './configs/BackgroundCutConfig';
+import BackgroundNegationConfig from './configs/BackgroundNegationConfig';
 
 
 
@@ -34,15 +35,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
   React.useEffect(() => {
     props.getConfig()
   }, [])
-//   "Background Cut": {
-//     "color_model_mix_factor": "0 - 1"",
-//     "downscale_factor": "1,2 3 4",
-//     "global_bg_model_num_components": "5 - 15",
-//     "median_blur_kernel_size": "odd number between 1 - 50"
-// },
-// "Background Negation": {
-//     "threshold": "0 - 255"
-// },
+
   return (
     <Container fixed maxWidth="md">
       <FormControlLabel
@@ -66,7 +59,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
 
             {props.matter === "Background Negation" &&
             <>
-              <BackgroundCutConfig />
+              <BackgroundNegationConfig />
             </>
             }
 
