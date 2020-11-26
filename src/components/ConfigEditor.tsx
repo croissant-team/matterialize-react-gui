@@ -2,8 +2,11 @@ import React from 'react';
 import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography, Button } from '@material-ui/core';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
+import PublishIcon from '@material-ui/icons/Publish';
 import { getConfig } from '../data/actions/config/configActions';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import BackgroundCutConfig from './configs/BackgroundCutConfig';
+
 
 
 const mapStateToProps = (state: RootState) => {
@@ -58,18 +61,12 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
             {props.matter === "Background Cut" &&
             <>
               <BackgroundCutConfig />
-              <Button variant="contained" color="primary"> Apply </Button>
-              &nbsp;
-              &nbsp;
             </>
             }
 
             {props.matter === "Background Negation" &&
             <>
               <BackgroundCutConfig />
-              <Button variant="contained" color="primary"> Apply </Button>
-              &nbsp;
-              &nbsp;
             </>
             }
 
@@ -80,11 +77,11 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
                 </Box>
               </div>
             }
-
-            <Button variant="contained" color="primary"> Import </Button>
+            <br />
+            <Button variant="contained" color="primary"> <PublishIcon /> &nbsp; Import </Button>
             &nbsp;
             &nbsp;
-            <Button variant="contained" color="secondary"> Export </Button>
+            <Button variant="contained" color="secondary"> <GetAppIcon /> &nbsp; Export </Button>
             <br />
             <br />
           </Paper>
