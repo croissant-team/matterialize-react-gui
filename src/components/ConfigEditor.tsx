@@ -1,65 +1,12 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
 import { Checkbox, Container, FormControlLabel, Paper, Collapse } from '@material-ui/core';
-import FileSelector from './FileSelector';
-import ScreenSelector from './ScreenSelector';
-import BlurSlider from './BlurSlider';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 
-const GREEN_SCREEN = 0
-const FILE = 1
-const DESKTOP = 2
-const BLUR = 3
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: any) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
 
 const mapStateToProps = (state: RootState) => {
   return {
-    selectedFile: state.fileReducer.file,
-    selectedDesktop: state.desktopReducer.desktop
+    matter: state.configReducer.matter
   }
 }
 
@@ -72,69 +19,22 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 type ConfigEditorProps =  PropsFromRedux;
 
 const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
-  const [value, setValue] = React.useState(0);
   const [showConfig, setShowConfig] = React.useState(false);
-
-
-  const getFilePath = (file: File | undefined) => {
-    if (file === undefined) {
-      return "No file selected"
-    } else {
-      return (file as any).path
-    }
-  }
-
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-    switch (newValue) {
-      case GREEN_SCREEN:
-        fetch('http://localhost:9000/background/clear/', {
-          method: 'POST',
-        })
-        break;
-      case FILE:
-
-        if (props.selectedFile !== undefined) {
-          const file = props.selectedFile as File
-          const path = getFilePath(file)
-  
-          
-          if (file.type.includes("video")) {
-            fetch('http://localhost:9000/background/video', {
-              method: 'POST',
-              body: JSON.stringify({ file_path: path }),
-            })
-          } else if (file.type.includes("image")) {  
-            fetch('http://localhost:9000/background/set', {
-              method: 'POST',
-              body: JSON.stringify({ file_path: path }),
-            })
-          }
-        } 
-
-        break;
-      case DESKTOP:
-        if (props.selectedDesktop !== "") {
-          fetch("http://localhost:9000/background/desktop",  {
-            method: 'POST',
-            body: JSON.stringify({ desktop: props.selectedDesktop })
-          })
-        }
-        break;
-      case BLUR:
-        fetch('http://localhost:9000/background/blur', {
-          method: 'POST',
-          body: JSON.stringify({ size: 63 }),
-        })
-        break;
-    }
-    // call endpoint to change it
-  };
 
   const toggleConfig = () => {
     setShowConfig(!showConfig)
   }
 
+  React.useEffect(() => {}, [])
+//   "Background Cut": {
+//     "color_model_mix_factor": "0 - 1"",
+//     "downscale_factor": "1,2 3 4",
+//     "global_bg_model_num_components": "5 - 15",
+//     "median_blur_kernel_size": "odd number between 1 - 50"
+// },
+// "Background Negation": {
+//     "threshold": "0 - 255"
+// },
   return (
     <Container fixed maxWidth="md">
       <FormControlLabel
@@ -150,25 +50,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
       />
         <Collapse in={showConfig}>
           <Paper square>
-              <Tabs centered value={value} onChange={handleChange} aria-label="simple tabs example">
-              <Tab label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
-              <Tab label="File" {...a11yProps(FILE)} />
-              <Tab label="Screen Capture" {...a11yProps(DESKTOP)} />
-              <Tab label="Blur" {...a11yProps(BLUR)} />
-              </Tabs>
-          <TabPanel value={value} index={GREEN_SCREEN}>
-              Green Screen effect applied
-          </TabPanel>
-          <TabPanel value={value} index={FILE}>
-              <FileSelector /> <br /> <br />
-              Selected file: {getFilePath(props.selectedFile)}
-          </TabPanel>
-          <TabPanel value={value} index={DESKTOP}>
-              <ScreenSelector />
-          </TabPanel>
-          <TabPanel value={value} index={BLUR}>
-              <BlurSlider />
-          </TabPanel>
+            {props.matter}
           </Paper>
         </Collapse>
     </Container>

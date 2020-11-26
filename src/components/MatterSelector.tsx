@@ -8,10 +8,11 @@ import Select from '@material-ui/core/Select'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Matter } from '../types'
 import { showToast } from '../data/actions/toast/toastActions'
+import { matterUpdated } from '../data/actions/config/configActions'
 
 const PRECONDITION_FAILED = 412
 
-const connector = connect(null, { showToast })
+const connector = connect(null, { showToast, matterUpdated })
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 type MatterSelectorProps = PropsFromRedux
@@ -43,6 +44,7 @@ const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
     })
       .then(res =>  {
         if (res.ok) {
+          props.matterUpdated(matterType)
         } else if (res.status === PRECONDITION_FAILED) {
           setMatter(prevMatter)
           props.showToast("Please take a clean plate before using this matter", "warning")
@@ -63,7 +65,10 @@ const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
       .then(res => {
         if (res.ok) {
           res.json()
-          .then(data => setMatter(data.matter))
+          .then(data => { 
+            setMatter(data.matter)
+            props.matterUpdated(data.matter)
+          })
         } else if (res.status === PRECONDITION_FAILED) {
           props.showToast("Please take a clean plate before using this matter", "warning")
         }
