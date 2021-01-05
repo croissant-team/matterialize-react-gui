@@ -20,12 +20,15 @@ export const getConfig = (): AppThunk => async dispatch => {
    fetch("http://localhost:9000/matters/config")
    .then(resp => resp.json())
    .then(raw => {
+      console.log(raw);
       var configs: MatterConfig[] = []
 
       for (var matter_name in Object.keys(raw)) {
          var config_fields: ConfigField[] = []
 
-         for (var field_name in Object.keys(raw[matter_name])) {
+         console.log(raw[matter_name])
+         console.log(matter_name)
+         for (var field_name in Object.keys(raw[matter_name])) {  
             var raw_field = raw[matter_name][field_name]
             config_fields.push({
                name: field_name,

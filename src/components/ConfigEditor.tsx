@@ -6,10 +6,9 @@ import PublishIcon from '@material-ui/icons/Publish';
 import { getConfig, importConfig, exportConfig } from '../data/actions/config/configActions';
 import { cameraLoading } from '../data/actions/loading/loadingActions';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import BackgroundCutConfig from './configs/BackgroundCutConfig';
-import BackgroundNegationConfig from './configs/BackgroundNegationConfig';
 import { ExpandMore } from '@material-ui/icons';
 import { Col, Row } from 'react-grid-system';
+import MatterConfigEditor from './MatterConfig';
 
 
 
@@ -55,13 +54,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
           <br />
           <Grid container justify="center" alignItems="center" spacing={4}>
             <Grid item xs={12}>
-              {props.matter === "Background Cut" &&
-                <BackgroundCutConfig />
-              }
-
-              {props.matter === "Background Negation" &&
-                <BackgroundNegationConfig />
-              }
+              <MatterConfigEditor />
 
               {(props.matter === "None" || props.matter === "OpenCV") &&
                 <div>

@@ -1,13 +1,14 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-import { Button, Container } from '@material-ui/core';
+import { Box, Button, Container } from '@material-ui/core';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../data/reducers';
 import CheckIcon from '@material-ui/icons/Check';
 import { postConfig } from '../data/actions/config/configActions';
 import { cameraLoading } from '../data/actions/loading/loadingActions';
 import { MatterConfig } from '../data/reducers/configReducer'
+import { config } from 'process';
 
 function valuetext(value: number) {
   return `${value}`;
@@ -26,17 +27,17 @@ const connector = connect(
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
-type MatterConfigProps =  PropsFromRedux;
+type MatterConfigEditorProps =  PropsFromRedux;
 
 
-const MatterConfig: React.FC<MatterConfigProps> = (props) => {
+const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
 //   const [mixFactor, setMixFactor] = React.useState(0.25);
 //   const [downscaleFactor, setDownscaleFactor] = React.useState(2);
 //   const [numComponents, setNumComponents] = React.useState(11);
 //   const [medianBlurKernelSize, setMedianBlurKernelSize] = React.useState(21);
 //   const [changed, setChanged] = React.useState(false);
 
-  const [matterConfig, setMatterConfig] = React.useState({} as MatterConfig);
+  const [matterConfig, setMatterConfig] = React.useState({matter: "None", fields: []} as MatterConfig);
   React.useEffect(() => {
     try {
       props.config.forEach(element => {
@@ -58,42 +59,29 @@ const MatterConfig: React.FC<MatterConfigProps> = (props) => {
 
   return (
     <Container>
-      <br />
-      <Typography id="discrete-slider-custom" gutterBottom>
-          Model Mix Factor
-      </Typography>
-      <Slider
-        key="slider-bgCut-mix-factor"
-        value={mixFactor}
-        getAriaValueText={valuetext}
-        aria-labelledby="discrete-slider-bgCut-mix-factor"
-        onChange={changeMixFactor}
-        valueLabelDisplay="auto"
-        marks={modelMixFactorMarks}
-        min={0}
-        step={0.01}
-        max={1}
-      />
       {matterConfig.fields.length > 0 &&
+        matterConfig.fields.forEach(field => {
+          return <>
+            <br />
+            <Typography id="discrete-slider-custom" gutterBottom>
+                {field.name}
+            </Typography>
+            <Slider
+              key="slider-bgCut-mix-factor"
+              value={field.value}
+              getAriaValueText={valuetext}
+              aria-labelledby="discrete-slider-bgCut-mix-factor"
+              // onChange={changeMixFactor}
+              valueLabelDisplay="auto"
+              min={field.field_info.min}
+              step={field.field_info.step_size}
+              max={field.field_info.max}
+            />
+          </>
+        })
       }
-      matterConfig.
-      <br />
-      <Typography id="discrete-slider-custom" gutterBottom>
-          {}
-      </Typography>
-      <Slider
-        key="slider-bgCut-mix-factor"
-        value={mixFactor}
-        getAriaValueText={valuetext}
-        aria-labelledby="discrete-slider-bgCut-mix-factor"
-        onChange={changeMixFactor}
-        valueLabelDisplay="auto"
-        marks={modelMixFactorMarks}
-        min={0}
-        step={0.01}
-        max={1}
-      />
 
+{/* 
       <Button 
         disabled={!changed} 
         variant="contained" 
@@ -101,9 +89,17 @@ const MatterConfig: React.FC<MatterConfigProps> = (props) => {
         onClick={applyConfig}
       >
          <CheckIcon /> &nbsp; Apply 
-      </Button>
+      </Button> */}
+
+      {matterConfig.fields.length === 0 &&
+        <div>
+          <Box p={3}>
+            <Typography>{`No config available for matter '${props.matter}'`}</Typography>
+          </Box>
+        </div>
+      }
     </Container>
   );
 }
 
-export default connector(MatterConfig)
+export default connector(MatterConfigEditor)
