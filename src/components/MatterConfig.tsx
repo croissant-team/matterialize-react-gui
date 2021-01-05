@@ -31,27 +31,17 @@ type MatterConfigEditorProps =  PropsFromRedux;
 
 
 const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
-//   const [mixFactor, setMixFactor] = React.useState(0.25);
-//   const [downscaleFactor, setDownscaleFactor] = React.useState(2);
-//   const [numComponents, setNumComponents] = React.useState(11);
-//   const [medianBlurKernelSize, setMedianBlurKernelSize] = React.useState(21);
-//   const [changed, setChanged] = React.useState(false);
-
   const [matterConfig, setMatterConfig] = React.useState({matter: "None", fields: []} as MatterConfig);
   React.useEffect(() => {
     try {
       props.config.forEach(element => {
         if (element.matter === props.matter) {
+            console.log(element)
             setMatterConfig(element)
         }
       });
-    //   const bgCutConfig = props.config["Background Cut"]
-    //   setMixFactor(bgCutConfig["color_model_mix_factor"])
-    //   setDownscaleFactor(bgCutConfig["downscale_factor"])
-    //   setNumComponents(bgCutConfig["global_bg_model_num_components"])
-    //   setMedianBlurKernelSize(bgCutConfig["median_blur_kernel_size"])
     } catch {}
-  }, [props.matter, props.config])
+  }, [props.matter])
 
   const changeField = (event: any, newValue: any) => {
       // something here
@@ -59,27 +49,25 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
 
   return (
     <Container>
-      {matterConfig.fields.length > 0 &&
-        matterConfig.fields.forEach(field => {
-          return <>
-            <br />
-            <Typography id="discrete-slider-custom" gutterBottom>
-                {field.name}
-            </Typography>
-            <Slider
-              key="slider-bgCut-mix-factor"
-              value={field.value}
-              getAriaValueText={valuetext}
-              aria-labelledby="discrete-slider-bgCut-mix-factor"
-              // onChange={changeMixFactor}
-              valueLabelDisplay="auto"
-              min={field.field_info.min}
-              step={field.field_info.step_size}
-              max={field.field_info.max}
-            />
-          </>
-        })
-      }
+      {matterConfig.fields.map(field => {
+        return (<>
+          <br />
+          <Typography id="discrete-slider-custom" gutterBottom>
+              {field.name}
+          </Typography>
+          <Slider
+            key="slider-bgCut-mix-factor"
+            value={field.value}
+            getAriaValueText={valuetext}
+            aria-labelledby="discrete-slider-bgCut-mix-factor"
+            // onChange={changeMixFactor}
+            valueLabelDisplay="auto"
+            min={field.field_info.min}
+            step={field.field_info.step_size}
+            max={field.field_info.max}
+          />
+        </>)
+      })}
 
 {/* 
       <Button 

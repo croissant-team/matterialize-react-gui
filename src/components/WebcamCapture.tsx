@@ -23,7 +23,6 @@ const WebcamCapture: React.FC<WebcamCaptureProps> = (props) => {
 
   const handleDevices = (deviceList: MediaDeviceInfo[]): void => {
     deviceList.forEach(element => {
-      console.log(element)
       if (element.label === 'preview_matterialize') {
         setDeviceId(element.deviceId)
       }

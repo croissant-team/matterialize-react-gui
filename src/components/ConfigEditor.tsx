@@ -53,17 +53,11 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
         <AccordionDetails>
           <br />
           <Grid container justify="center" alignItems="center" spacing={4}>
+
             <Grid item xs={12}>
               <MatterConfigEditor />
-
-              {(props.matter === "None" || props.matter === "OpenCV") &&
-                <div>
-                  <Box p={3}>
-                    <Typography>{`No config available for matter '${props.matter}'`}</Typography>
-                  </Box>
-                </div>
-              }
             </Grid>
+
             <Grid item xs={12}>
               <Button variant="contained" color="primary" onClick={importConfig}> 
                 <PublishIcon /> &nbsp; Import 
@@ -73,6 +67,7 @@ const ConfigEditor: React.FC<ConfigEditorProps> = (props) => {
                 <GetAppIcon /> &nbsp; Export 
               </Button>
             </Grid>
+            
           </Grid>
         </AccordionDetails>
       </Accordion>

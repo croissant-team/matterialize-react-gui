@@ -12,20 +12,20 @@ if (isDev) {
   installExtension = devTools.default;
   REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
 }
+// TODO: uncomment this
+// const ms = spawn('matterialize-server', []);
 
-const ms = spawn('matterialize-server', []);
+// ms.stdout.on('data', (data) => {
+//   console.log(`stdout: ${data}`);
+// });
 
-ms.stdout.on('data', (data) => {
-  console.log(`stdout: ${data}`);
-});
+// ms.stderr.on('data', (data) => {
+//   console.error(`stderr: ${data}`);
+// });
 
-ms.stderr.on('data', (data) => {
-  console.error(`stderr: ${data}`);
-});
-
-ms.on('close', (code) => {
-  console.log(`child process exited with code ${code}`);
-});
+// ms.on('close', (code) => {
+//   console.log(`child process exited with code ${code}`);
+// });
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
