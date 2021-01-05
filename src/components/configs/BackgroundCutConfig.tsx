@@ -141,7 +141,7 @@ const BackgroundCutConfig: React.FC<BackgroundCutConfigProps> = (props) => {
     setChanged(false)
   }
 
-  
+
   return (
     <Container>
       <br />

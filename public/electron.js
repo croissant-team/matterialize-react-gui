@@ -13,19 +13,17 @@ if (isDev) {
   REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
 }
 
-const binPath = isDev ? './public/bin/test.sh' : './bin/test.sh';
-const ls = spawn('matterialize-server', []);
-// const ls = spawn('sh', [`${process.cwd()}/public/bin/test.sh`]);
+const ms = spawn('matterialize-server', []);
 
-ls.stdout.on('data', (data) => {
+ms.stdout.on('data', (data) => {
   console.log(`stdout: ${data}`);
 });
 
-ls.stderr.on('data', (data) => {
+ms.stderr.on('data', (data) => {
   console.error(`stderr: ${data}`);
 });
 
-ls.on('close', (code) => {
+ms.on('close', (code) => {
   console.log(`child process exited with code ${code}`);
 });
 
@@ -75,9 +73,9 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
-  fetch("http://localhost:9000/shutdown", {
-    method: 'POST'
-  });
+  // fetch("http://localhost:9000/shutdown", {
+  //   method: 'POST'
+  // });
   app.quit();
 });
 
