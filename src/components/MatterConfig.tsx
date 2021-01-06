@@ -36,6 +36,7 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
 
   React.useEffect(() => {
     try {
+      setChanged(false);
       props.config.forEach(element => {
         if (element.matter === props.matter) {
             setMatterConfig(element)
