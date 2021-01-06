@@ -8,7 +8,6 @@ import CheckIcon from '@material-ui/icons/Check';
 import { postConfig } from '../data/actions/config/configActions';
 import { cameraLoading } from '../data/actions/loading/loadingActions';
 import { MatterConfig } from '../data/reducers/configReducer'
-import { config } from 'process';
 
 function valuetext(value: number) {
   return `${value}`;
@@ -32,35 +31,60 @@ type MatterConfigEditorProps =  PropsFromRedux;
 
 const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
   const [matterConfig, setMatterConfig] = React.useState({matter: "None", fields: []} as MatterConfig);
+  const [values, setValues] = React.useState({} as any);
+  const [changed, setChanged] = React.useState<boolean>(false);
+
   React.useEffect(() => {
     try {
       props.config.forEach(element => {
         if (element.matter === props.matter) {
-            console.log(element)
             setMatterConfig(element)
+
+            var vals: any = {}
+            element.fields.forEach(field => {
+              console.log(field.value)
+              vals[field.name] = (field.value as number)
+            })
+
+            setValues(vals)
         }
       });
     } catch {}
   }, [props.matter])
 
-  const changeField = (event: any, newValue: any) => {
-      // something here
+  const changeField = (newValue: any, field: string) => {
+    var newValues = { ...values }
+    newValues[field] = newValue as number
+    setValues(newValues)
+    setChanged(true);
   }
+
+  const applyConfig = () => {
+    var config: any = {}
+    Object.keys(values).forEach(key => {
+      config[key] = `${values[key]}`
+    })
+    props.cameraLoading()
+    props.postConfig(props.matter, config)
+    setChanged(false)
+  }
+
 
   return (
     <Container>
       {matterConfig.fields.map(field => {
+        const id = field.name.replace(" ", "-")
         return (<>
           <br />
-          <Typography id="discrete-slider-custom" gutterBottom>
+          <Typography id={`discrete-typography-${id}`} gutterBottom>
               {field.name}
           </Typography>
           <Slider
-            key="slider-bgCut-mix-factor"
-            value={field.value}
+            key={`slider-${id}`}
+            value={values[field.name]}
             getAriaValueText={valuetext}
-            aria-labelledby="discrete-slider-bgCut-mix-factor"
-            // onChange={changeMixFactor}
+            aria-labelledby={`discrete-slider-${id}`}
+            onChange={(e, value) => changeField(value, field.name)}
             valueLabelDisplay="auto"
             min={field.field_info.min}
             step={field.field_info.step_size}
@@ -69,7 +93,7 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
         </>)
       })}
 
-{/* 
+    {matterConfig.fields.length > 0 &&
       <Button 
         disabled={!changed} 
         variant="contained" 
@@ -77,7 +101,8 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
         onClick={applyConfig}
       >
          <CheckIcon /> &nbsp; Apply 
-      </Button> */}
+      </Button> 
+    }
 
       {matterConfig.fields.length === 0 &&
         <div>
