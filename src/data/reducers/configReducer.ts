@@ -1,13 +1,30 @@
 import { ConfigType, GET_CONFIG, MATTER_UPDATED } from "../actions/config/configTypes"
 
+export type FieldInfo = {
+   default_value: number,
+   max: number,
+   min: number,
+   step_size: number
+}
+
+export type ConfigField = {
+   name: string,
+   value: any,
+   field_info: FieldInfo
+}
+
+export type MatterConfig = {
+   matter: string,
+   fields: ConfigField[]
+}
 
 type ConfigState = {
-    config: any,
-    matter: string
+   config: MatterConfig[],
+   matter: string
 }
 
 const initialState: ConfigState = {
-   config: {},
+   config: [],
    matter: "None"
 }
 
