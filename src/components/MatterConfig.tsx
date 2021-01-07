@@ -51,7 +51,7 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
         }
       });
     } catch {}
-  }, [props.matter])
+  }, [props.matter, props.config])
 
   const changeField = (newValue: any, field: string) => {
     var newValues = { ...values }
