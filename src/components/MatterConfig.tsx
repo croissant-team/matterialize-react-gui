@@ -51,7 +51,7 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
         }
       });
     } catch {}
-  }, [props.matter])
+  }, [props.matter, props.config])
 
   const changeField = (newValue: any, field: string) => {
     var newValues = { ...values }
@@ -78,7 +78,7 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
         return (<>
           <br />
           <Typography id={`discrete-typography-${id}`} gutterBottom>
-              {field.name}
+              {field.field_info.display_name}
           </Typography>
           <Slider
             key={`slider-${id}`}

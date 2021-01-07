@@ -4,7 +4,8 @@ export type FieldInfo = {
    default_value: number,
    max: number,
    min: number,
-   step_size: number
+   step_size: number,
+   display_name: string
 }
 
 export type ConfigField = {

@@ -30,7 +30,7 @@ export const getConfig = (): AppThunk => async dispatch => {
          console.log(matter_name)
 
          if (raw[matter_name] !== null) {
-            Object.keys(raw[matter_name]).forEach(field_name => {  
+            Object.keys(raw[matter_name]).forEach(field_name => {
                var raw_field = raw[matter_name][field_name]
                config_fields.push({
                   name: field_name,
@@ -39,7 +39,8 @@ export const getConfig = (): AppThunk => async dispatch => {
                      default_value: raw_field.field_info.default_value,
                      max: raw_field.field_info.max,
                      min: raw_field.field_info.min,
-                     step_size: raw_field.field_info.step_size
+                     step_size: raw_field.field_info.step_size,
+                     display_name: raw_field.field_info.display_name
                   }
                })
             })
