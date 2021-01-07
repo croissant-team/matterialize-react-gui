@@ -78,7 +78,7 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
         return (<>
           <br />
           <Typography id={`discrete-typography-${id}`} gutterBottom>
-              {field.name}
+              {field.field_info.display_name}
           </Typography>
           <Slider
             key={`slider-${id}`}
