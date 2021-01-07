@@ -5,12 +5,33 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import store from "./data/store"
+import { createMuiTheme, ThemeOptions, ThemeProvider } from '@material-ui/core'
+import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline'
+import { blue, purple } from '@material-ui/core/colors'
+
+
+const darkTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: blue[500],
+    },
+  },
+});
+
+const lightTheme = createMuiTheme({
+  palette: {
+    type: 'light'
+  },
+});
 
 ReactDOM.render(
   <Provider store={store}>
-    {/* <React.StrictMode> */}
-      <App />
-    {/* </React.StrictMode> */}
+    <ThemeProvider theme={createMuiTheme(darkTheme)}>
+      <ScopedCssBaseline>
+        <App />
+      </ScopedCssBaseline>
+    </ThemeProvider>
   </Provider>,
   document.getElementById('root')
 )
