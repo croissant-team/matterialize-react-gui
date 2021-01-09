@@ -90,6 +90,16 @@ const MatterConfigEditor: React.FC<MatterConfigEditorProps> = (props) => {
             min={field.field_info.min}
             step={field.field_info.step_size}
             max={field.field_info.max}
+            marks={[
+              {
+                value:field.field_info.min,
+                label:`${field.field_info.min}`
+              },
+              {
+                value:field.field_info.max,
+                label:`${field.field_info.max}`
+              }
+            ]}
           />
         </>)
       })}
