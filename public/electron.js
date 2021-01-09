@@ -44,6 +44,8 @@ function createWindow() {
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
 
+  win.removeMenu()
+
   // Open the DevTools.
   if (isDev) {
     win.webContents.openDevTools({ mode: "detach" });
