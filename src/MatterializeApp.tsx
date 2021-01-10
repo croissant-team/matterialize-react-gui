@@ -15,57 +15,50 @@ import BenchmarkViewer from './components/BenchmarkViewer'
 const MatterializeApp: React.FC = () => {
   return (
     <div className="App">
-      <Container>
-        <Row>
-          <Col>
-            <WebcamCapture/>
-            <RecordingIndicator />
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <RecordingButton/> 
-            &nbsp;
-            <Visible sm xs>
-              <br />
-              <br />
-            </Visible>
-            &nbsp;
-            <CleanPlateCapture/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <WebcamSelector/>
-            &nbsp;
-            &nbsp;
-            <MatterSelector/>
-          </Col>
-        </Row>
-        <br/>
-        <Row>
-          <Col>
-            <BackgroundSelector />
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <Row>
-          <Col>
-            <ConfigEditor />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <BenchmarkViewer />
-          </Col>
-        </Row>
-        <br />
-        <br />
-        <ResponseToast />
-      </Container>
+      <br />
+      <Row>
+        <Col>
+          <WebcamCapture/>
+          <RecordingIndicator />
+        </Col>
+      </Row>
+      <br/>
+      <Row>
+        <Col>
+          <RecordingButton/> 
+          &nbsp;
+          &nbsp;
+          <CleanPlateCapture/>
+        </Col>
+      </Row>
+      <br/>
+      <Row>
+        <Col>
+          <WebcamSelector/>
+          <MatterSelector/>
+        </Col>
+      </Row>
+      <br/>
+      <Row>
+        <Col>
+          <BackgroundSelector />
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <Row>
+        <Col>
+          <ConfigEditor />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <BenchmarkViewer />
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <ResponseToast />
     </div>
   )
 }
