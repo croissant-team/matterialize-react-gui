@@ -30,8 +30,8 @@ ms.on('close', (code) => {
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 900,
+    width: 680,
+    height: 950,
     minWidth: 680,
     webPreferences: {
       nodeIntegration: true
