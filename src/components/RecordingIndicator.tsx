@@ -21,21 +21,15 @@ type RecordingIndicatorProps =  PropsFromRedux;
 
 const RecordingIndicator: React.FC<RecordingIndicatorProps> = (props) => {
   return (
-    <>
-      <Container style={{ position: 'absolute', top: '5%'}}>
-        <Row>
-          <Col>
-            <Slide direction="down" in={props.recording}>
-              <Chip
-                icon={<VideocamIcon/>}
-                label="Recording"
-                color="secondary"
-              />
-            </Slide>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <div style={{ position: 'absolute', top: '5%', width: '100vw', justifyContent: 'center'}}>
+        <Slide direction="down" in={props.recording}>
+          <Chip
+            icon={<VideocamIcon/>}
+            label="Recording"
+            color="secondary"
+          />
+        </Slide>
+    </div>
   )
 }
 
