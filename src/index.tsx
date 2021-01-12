@@ -5,9 +5,9 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import store from "./data/store"
-import { createMuiTheme, ThemeOptions, ThemeProvider } from '@material-ui/core'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core'
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline'
-import { blue, purple } from '@material-ui/core/colors'
+import { blue } from '@material-ui/core/colors'
 
 
 const darkTheme = createMuiTheme({

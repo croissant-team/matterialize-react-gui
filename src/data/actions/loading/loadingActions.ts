@@ -1,4 +1,3 @@
-import { AppThunk } from "../../thunk"
 import { CAMERA_LOADED, CAMERA_LOADING, SERVER_LOADED } from "./loadingTypes"
 
 export const serverLoaded = () => ({

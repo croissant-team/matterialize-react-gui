@@ -1,5 +1,5 @@
 import React from 'react';
-import { Checkbox, Container, FormControlLabel, Paper, Collapse, Box, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Grid } from '@material-ui/core';
+import { Container, Typography, Button, Accordion, AccordionSummary, AccordionDetails, Grid } from '@material-ui/core';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 import PublishIcon from '@material-ui/icons/Publish';
@@ -7,7 +7,6 @@ import { getConfig, importConfig, exportConfig } from '../data/actions/config/co
 import { cameraLoading } from '../data/actions/loading/loadingActions';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { ExpandMore } from '@material-ui/icons';
-import { Col, Row } from 'react-grid-system';
 import MatterConfigEditor from './MatterConfig';
 
 
