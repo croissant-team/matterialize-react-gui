@@ -4,11 +4,11 @@ import InputLabel from '@material-ui/core/InputLabel'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import { Desktop } from '../types'
 import { RootState } from '../data/reducers'
 import { connect, ConnectedProps } from 'react-redux'
 import { desktopLoaded } from '../data/actions/desktop/desktopActions'
+import { availableDesktops, setScreenCaptureBackground } from '../endpoints'
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -40,7 +40,7 @@ const ScreenSelector: React.FC<ScreenSelectorProps> = (props) => {
   const [desktops, setDesktops] = React.useState<Desktop[]>([])
 
   const selectDesktop = (desktopName: string) => {
-    fetch("http://localhost:9000/background/desktop",  {
+    fetch(setScreenCaptureBackground,  {
       method: 'POST',
       body: JSON.stringify({ desktop: desktopName })
     })
@@ -49,7 +49,7 @@ const ScreenSelector: React.FC<ScreenSelectorProps> = (props) => {
 
   React.useEffect(
     () => {
-      fetch("http://localhost:9000/background/desktop/options")
+      fetch(availableDesktops)
         .then(res => res.json())
         .then(data => {
           setDesktops(data.devices)

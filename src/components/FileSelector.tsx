@@ -5,6 +5,7 @@ import { RootState } from '../data/reducers'
 import { connect, ConnectedProps } from 'react-redux'
 import { fileLoaded } from '../data/actions/file/fileActions'
 import { showToast } from '../data/actions/toast/toastActions'
+import { setImageBackground, setVideoBackground } from '../endpoints'
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -26,13 +27,13 @@ const FileSelector: React.FC<FileSelectorProps> = (props) => {
     const path = (file as any).path
 
     if (file.type.includes("video")) {
-      fetch('http://localhost:9000/background/video', {
+      fetch(setVideoBackground, {
         method: 'POST',
         body: JSON.stringify({ file_path: path }),
       })
       .then(res => props.fileLoaded(file))
     } else if (file.type.includes("image")) {  
-      fetch('http://localhost:9000/background/set', {
+      fetch(setImageBackground, {
         method: 'POST',
         body: JSON.stringify({ file_path: path }),
       })

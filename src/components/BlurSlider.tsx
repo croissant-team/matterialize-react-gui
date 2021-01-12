@@ -1,18 +1,7 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: 300,
-    },
-    margin: {
-      height: theme.spacing(3),
-    },
-  }),
-);
+import { setBlurBackground } from '../endpoints';
 
 const marks = [
   {
@@ -31,7 +20,6 @@ function valuetext(value: number) {
 
 export default function BlurSlider() {
   const [blur, setBlur] = React.useState(63)
-  const classes = useStyles();
 
   const handleChange = (event: any, newValue: any) => {
     var blurSize = Math.floor(((newValue as number) / 100) * 128)
@@ -47,7 +35,7 @@ export default function BlurSlider() {
     if (blurSize !== blur) {
       setBlur(blurSize)
 
-      fetch('http://localhost:9000/background/blur', {
+      fetch(setBlurBackground, {
         method: 'POST',
         body: JSON.stringify({ size: blurSize }),
       })

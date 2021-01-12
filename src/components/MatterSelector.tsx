@@ -9,6 +9,7 @@ import { Matter } from '../types'
 import { showToast } from '../data/actions/toast/toastActions'
 import { matterUpdated } from '../data/actions/config/configActions'
 import { cameraLoading, cameraLoaded } from '../data/actions/loading/loadingActions';
+import { availableMatters, currentMatter, setMatterType } from '../endpoints'
 
 const PRECONDITION_FAILED = 412
 
@@ -39,7 +40,7 @@ const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
 
     props.cameraLoading()
 
-    fetch("http://localhost:9000/matter/set",  {
+    fetch(setMatterType,  {
       method: 'POST',
       body: JSON.stringify({ matter: matterType })
     })
@@ -58,12 +59,12 @@ const MatterSelector: React.FC<MatterSelectorProps> = (props) => {
 
   React.useEffect(
     () => {
-      fetch("http://localhost:9000/matter/options")
+      fetch(availableMatters)
         .then(res => res.json())
         .then(data => {
           setMatters(data.matters)
         })
-      fetch("http://localhost:9000/matter/current")
+      fetch(currentMatter)
       .then(res => {
         if (res.ok) {
           res.json()

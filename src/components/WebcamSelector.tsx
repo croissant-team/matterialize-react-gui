@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
 import { Device } from '../types'
 import { showToast } from '../data/actions/toast/toastActions'
+import { availableCameras, currentCamera, setCamera } from '../endpoints'
 
 const BAD_REQUEST = 400
 const CONFLICT = 409
@@ -30,7 +31,7 @@ const WebcamSelector: React.FC<WebcamSelectorProps> = (props) => {
   const [devices, setDevices] = React.useState<Device[]>([])
 
   const selectCamera = (devNum: number): void => {
-    fetch('http://localhost:9000/camera/set', {
+    fetch(setCamera, {
       method: 'POST',
       body: JSON.stringify({ dev_num: devNum }),
       })
@@ -47,11 +48,11 @@ const WebcamSelector: React.FC<WebcamSelectorProps> = (props) => {
 
   React.useEffect(
     () => {
-      fetch('http://localhost:9000/camera/options')
+      fetch(availableCameras)
         .then(res => res.json())
         .then(data => {
           if (data.devices.length > 0) {
-            fetch('http://localhost:9000/camera/current')
+            fetch(currentCamera)
             .then(res => res.json())
             .then(data => {
               if (data.available) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Container, createStyles, Grid, LinearProgress, makeStyles, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Theme, Typography } from '@material-ui/core'
 import { Assessment, ExpandMore } from '@material-ui/icons'
+import { startMatterBenchmark } from '../endpoints';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,7 +33,7 @@ const BenchmarkViewer = () => {
 
   const runBenchmark = () => {
     setLoading(true)
-    fetch("http://localhost:9000/matters/benchmark")
+    fetch(startMatterBenchmark)
     .then(res => res.json())
     .then(data => {
       const new_results: benchmarkResult[] = []

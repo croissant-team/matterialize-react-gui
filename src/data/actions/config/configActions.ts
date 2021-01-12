@@ -2,10 +2,11 @@ import { AppThunk } from "../../thunk"
 import { cameraLoaded } from "../loading/loadingActions"
 import { GET_CONFIG, MATTER_UPDATED } from "./configTypes"
 import { showToast } from '../toast/toastActions'
-import { FieldInfo, ConfigField, MatterConfig } from '../../reducers/configReducer'
+import { ConfigField, MatterConfig } from '../../reducers/configReducer'
+import { exportMatterConfigs, getMatterConfigs, importMatterConfigs, updateMatterConfig } from "../../../endpoints"
 
 export const postConfig = (matter: string, config: any): AppThunk => async dispatch => {
-   fetch("http://localhost:9000/matter/config/update",{
+   fetch(updateMatterConfig,{
       method: "POST",
       body: JSON.stringify({
          matter: matter,
@@ -17,7 +18,7 @@ export const postConfig = (matter: string, config: any): AppThunk => async dispa
 }
 
 export const getConfig = (): AppThunk => async dispatch => {
-   fetch("http://localhost:9000/matters/config")
+   fetch(getMatterConfigs)
    .then(resp => resp.json())
    .then(raw => {
       console.log(Object.keys(raw));
@@ -64,7 +65,7 @@ export const getConfig = (): AppThunk => async dispatch => {
 }
 
 export const importConfig = (): AppThunk => async dispatch => {
-   fetch("http://localhost:9000/matters/config/import_file", {
+   fetch(importMatterConfigs, {
       method: "POST"
    })
    .then(() => dispatch(getConfig()))
@@ -74,7 +75,7 @@ export const importConfig = (): AppThunk => async dispatch => {
 }
 
 export const exportConfig = (): AppThunk => async dispatch => {
-   fetch("http://localhost:9000/matters/config/export_file", {
+   fetch(exportMatterConfigs, {
       method: "POST"
    })
    .then(() => dispatch(showToast("Succesfully exported config", "success")))

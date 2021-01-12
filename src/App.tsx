@@ -5,8 +5,7 @@ import { CircularProgress } from '@material-ui/core'
 import MatterializeApp from './MatterializeApp'
 import { RootState } from './data/reducers'
 import { serverLoaded } from './data/actions/loading/loadingActions'
-
-
+import { availableMatters } from './endpoints'
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -25,7 +24,7 @@ type AppProps =  PropsFromRedux;
 const App: React.FC<AppProps> = (props) => {
 
   const checkLoaded = () => {
-    fetch("http://localhost:9000/matter/options")
+    fetch(availableMatters)
     .then(res => props.serverLoaded())
     .catch(data => checkLoaded())
   }
@@ -43,8 +42,8 @@ const App: React.FC<AppProps> = (props) => {
         >
           <CircularProgress />
       </div>
-
       }
+      
       {!props.serverLoading && 
         <MatterializeApp />
       }
