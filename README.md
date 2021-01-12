@@ -26,7 +26,7 @@ To run the application, simply run
 matterialize
 ```
 
-**Note: You will need a working installation of the matterialize backend to use this application**
+**Note: You will need a working installation of the Matterialize backend to use this application**
 
 ## Development
 
