@@ -5,6 +5,7 @@ import { Button, Snackbar } from '@material-ui/core'
 import VideocamIcon from '@material-ui/icons/Videocam';
 import StopIcon from '@material-ui/icons/Stop';
 import { recordingStarted, recordingStopped } from '../data/actions/recording/recordingActions'
+import { startRecording, stopRecording } from '../endpoints';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -28,7 +29,7 @@ const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
   const toggleRecord = () => {
     if(props.recording) {
       
-      fetch('http://localhost:9000/recording/stop', {
+      fetch(stopRecording, {
         method: 'POST'
       })
       .then(data => data.json())
@@ -43,7 +44,7 @@ const RecordingButton: React.FC<RecordingButtonProps> = (props) => {
       .then(path => setFilePath(path))
       
     } else {
-      fetch('http://localhost:9000/recording/start', {
+      fetch(startRecording, {
         method: 'POST'
       })
       .then(() => props.recordingStarted())

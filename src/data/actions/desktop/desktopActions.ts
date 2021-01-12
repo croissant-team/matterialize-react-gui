@@ -1,4 +1,3 @@
-import { AppThunk } from "../../thunk"
 import { DESKTOP_SELECTED } from "./desktopTypes"
 
 export const desktopLoaded = (desktop: string) => ({

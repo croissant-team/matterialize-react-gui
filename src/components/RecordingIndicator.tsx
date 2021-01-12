@@ -1,9 +1,8 @@
 import React from 'react'
 import { RootState } from '../data/reducers'
 import { connect, ConnectedProps } from 'react-redux'
-import { Chip, Container, Slide, Zoom } from '@material-ui/core'
+import { Chip, Slide } from '@material-ui/core'
 import VideocamIcon from '@material-ui/icons/Videocam';
-import { Row, Col } from 'react-grid-system';
 
 const mapStateToProps = (state: RootState) => {
   return {

@@ -1,5 +1,5 @@
 import './App.css'
-import { Col, Container, Hidden, Row, Visible } from 'react-grid-system'
+import { Col, Row } from 'react-grid-system'
 import React from 'react'
 import CleanPlateCapture from './components/CleanPlateCapture'
 import MatterSelector from './components/MatterSelector'

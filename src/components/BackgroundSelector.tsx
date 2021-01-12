@@ -1,20 +1,22 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Checkbox, Collapse, Container, FormControlLabel, Grid, Paper } from '@material-ui/core';
+import { Container, Grid, Paper } from '@material-ui/core';
 import FileSelector from './FileSelector';
 import ScreenSelector from './ScreenSelector';
 import BlurSlider from './BlurSlider';
 import { RootState } from '../data/reducers';
 import { connect, ConnectedProps } from 'react-redux';
+import { clearBackground, setBlurBackground, setImageBackground, setScreenCaptureBackground, setVideoBackground } from '../endpoints';
 
 const GREEN_SCREEN = 0
 const FILE = 1
 const DESKTOP = 2
 const BLUR = 3
+
+const DEFAULT_BLUR_AMOUNT = 63
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -49,13 +51,6 @@ function a11yProps(index: any) {
   };
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 const mapStateToProps = (state: RootState) => {
   return {
     selectedFile: state.fileReducer.file,
@@ -73,7 +68,6 @@ type BackgroundSelectorProps =  PropsFromRedux;
 
 const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
   const [value, setValue] = React.useState(0);
-  const [showBackgrounds, setShowBackgrounds] = React.useState(true);
 
   const getFilePath = (file: File | undefined) => {
     if (file === undefined) {
@@ -87,7 +81,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
     setValue(newValue);
     switch (newValue) {
       case GREEN_SCREEN:
-        fetch('http://localhost:9000/background/clear/', {
+        fetch(clearBackground, {
           method: 'POST',
         })
         break;
@@ -99,12 +93,12 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
   
           
           if (file.type.includes("video")) {
-            fetch('http://localhost:9000/background/video', {
+            fetch(setVideoBackground, {
               method: 'POST',
               body: JSON.stringify({ file_path: path }),
             })
           } else if (file.type.includes("image")) {  
-            fetch('http://localhost:9000/background/set', {
+            fetch(setImageBackground, {
               method: 'POST',
               body: JSON.stringify({ file_path: path }),
             })
@@ -114,20 +108,20 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
         break;
       case DESKTOP:
         if (props.selectedDesktop !== "") {
-          fetch("http://localhost:9000/background/desktop",  {
+          fetch(setScreenCaptureBackground,  {
             method: 'POST',
             body: JSON.stringify({ desktop: props.selectedDesktop })
           })
         }
         break;
       case BLUR:
-        fetch('http://localhost:9000/background/blur', {
+        fetch(setBlurBackground, {
           method: 'POST',
-          body: JSON.stringify({ size: 63 }),
+          body: JSON.stringify({ size: DEFAULT_BLUR_AMOUNT }),
         })
         break;
     }
-    // call endpoint to change it
+
   };
 
   return (
@@ -141,7 +135,7 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
                 scrollButtons="auto"
                 value={value}
                 onChange={handleChange} 
-                aria-label="simple tabs example"
+                aria-label="background-tabs"
               >
                 <Tab wrapped label="Green Screen" {...a11yProps(GREEN_SCREEN)} />
                 <Tab wrapped label="File" {...a11yProps(FILE)} />
@@ -154,16 +148,20 @@ const BackgroundSelector: React.FC<BackgroundSelectorProps> = (props) => {
               <TabPanel value={value} index={GREEN_SCREEN}>
                   Green Screen effect applied
               </TabPanel>
+
               <TabPanel value={value} index={FILE}>
                   <FileSelector /> <br /> <br />
                   Selected file: {getFilePath(props.selectedFile)}
               </TabPanel>
+
               <TabPanel value={value} index={DESKTOP}>
                   <ScreenSelector />
               </TabPanel>
+
               <TabPanel value={value} index={BLUR}>
                   <BlurSlider />
               </TabPanel>
+
             </Grid>
           </Grid>
 

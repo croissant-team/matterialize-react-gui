@@ -1,11 +1,12 @@
 import React from 'react'
 import { Button } from '@material-ui/core'
 import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined'
+import { clearBackground } from '../endpoints'
 
 const ClearBackground: React.FC = () => {
 
   const handleChange = (): void => {
-    fetch('http://localhost:9000/background/clear/', {
+    fetch(clearBackground, {
       method: 'POST',
     })
   }

@@ -5,6 +5,7 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import { captureCleanplate } from "../endpoints"
 
 const CleanPlateCapture = () => {
   const [open, setOpen] = React.useState(false)
@@ -14,7 +15,7 @@ const CleanPlateCapture = () => {
   }
 
   const takeCleanPlate = () => {
-    fetch("http://localhost:9000/cleanplate/take", {
+    fetch(captureCleanplate, {
       method : 'POST'
     })
     .then(res => setOpen(false))
